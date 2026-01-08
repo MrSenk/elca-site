@@ -1,6 +1,6 @@
 
 import { AppProvider } from './context/AppContext';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
 import Header from './components/PortfolioHeader';
 import HeroSection from './components/HeroSection';
@@ -28,8 +28,10 @@ function Portfolio() {
 }
 
 function App() {
+  const basename = import.meta.env.PROD ? '/elca-site' : '/';
+
   return (
-    <BrowserRouter basename="/elca-site">
+    <BrowserRouter basename={basename}>
       <AppProvider>
         <Layout>
           <Header />
@@ -38,6 +40,7 @@ function App() {
               <Route path="/" element={<Portfolio />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:id" element={<BlogArticle />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </PageTransition>
           <FooterSection />
