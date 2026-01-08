@@ -29,7 +29,7 @@ function Portfolio() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/elca-site">
       <AppProvider>
         <Layout>
           <Header />

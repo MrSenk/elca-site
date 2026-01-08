@@ -1,5 +1,6 @@
 
 import { useApp } from '../context/AppContext';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
     const { content } = useApp();
@@ -28,12 +29,12 @@ const HeroSection = () => {
                     </div>
                 ))}
             </div>
-            <a
-                href="/blog"
+            <Link
+                to="/blog"
                 className="text-theme-peach hover:text-theme-red underline underline-offset-4 decoration-2 text-lg font-medium mt-6 inline-block cursor-pointer transition-colors"
             >
                 → {content.ui.blogLink}
-            </a>
+            </Link>
         </section>
     );
 };

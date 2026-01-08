@@ -19,6 +19,16 @@
       }
     })();
   </script>
+  <script>
+    // Handle redirects from 404.html for client-side routing
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
 </head>
 
 <body>

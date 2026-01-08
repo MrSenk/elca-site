@@ -170,6 +170,13 @@ const BlogArticle = () => {
                     })}
                 </div>
             </article>
+
+            <Link
+                to="/blog"
+                className="text-theme-overlay hover:text-theme-peach transition-colors text-sm mt-8 inline-block"
+            >
+                {language === 'en' ? "← back to blog" : "← volver al blog"}
+            </Link>
         </div>
     );
 };
