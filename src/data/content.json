@@ -1,0 +1,228 @@
+{
+    "en": {
+        "greeting": "Hi, I am",
+        "footer": "First of all, I am not your friend...",
+        "profile": {
+            "name": "Camilo Cuevas",
+            "role": "Senior Salesforce Developer",
+            "location": "Temuco, Chile",
+            "stats": [
+                {
+                    "label": "Years Experience",
+                    "value": "5+"
+                },
+                {
+                    "label": "Certifications",
+                    "value": "5"
+                }
+            ]
+        },
+        "aboutMe": "I'm a Salesforce Developer with 5 years of deep expertise in Apex and Lightning Web Components. I'm the developer you rely on to keep systems stable, I thrive on solving complex business problems before they become emergencies. Whether it's modernizing legacy code, architecting scalable solutions, or implementing robust error handling, I'm all in. I had the opportunity to do internships in Germany and Austria through IAESTE, which taught me to adapt quickly and think on my feet.",
+        "beyondCode": "When I'm not architecting scalable solutions, you'll find me behind a camera capturing moments or playing violin and viola—something I've been doing since I was 7. I bring the same precision and passion to code that I do to music and photography.",
+        "ui": {
+            "blogLink": "what I've been up to",
+            "aboutMeTitle": "About Me",
+            "beyondCodeTitle": "Beyond Code",
+            "experienceTitle": "Experience",
+            "certificationsTitle": "Certifications",
+            "techStackTitle": "Tech Stack"
+        },
+        "tech": [
+            "Apex (Triggers, Batch, Queueable, Schedulable)",
+            "Lightning Web Components",
+            "Integration Patterns (REST APIs, Platform Events)",
+            "Flow Builder & Process Automation",
+            "SOQL/SOSL Optimization",
+            "Apex Testing & Mocking",
+            "Salesforce DX & CI/CD"
+        ],
+        "certifications": {
+            "sections": [
+                {
+                    "title": "The Important Ones",
+                    "items": [
+                        "Salesforce Certified Platform Developer",
+                        "Salesforce Certified Platform App Builder"
+                    ]
+                },
+                {
+                    "title": "The Rest (Still Count!)",
+                    "items": [
+                        "Salesforce Certified Platform Foundations",
+                        "Salesforce Certified Marketing Cloud Engagement Foundations",
+                        "Salesforce Certified AI Associate"
+                    ]
+                }
+            ]
+        },
+        "experience": [
+            {
+                "company": "BancoEstado",
+                "role": "Process, Systems and Technology Engineer",
+                "period": "Feb 2025 - Present",
+                "description": "Leading Salesforce development projects, implementing custom solutions using Apex programming and Lightning Web Components for process automation and system integration."
+            },
+            {
+                "company": "Tata Consultancy Services",
+                "role": "IT Analyst",
+                "period": "Apr 2023 - Feb 2025",
+                "description": "Developed Salesforce solutions using Apex, Lightning Web Components, and Salesforce Lightning. Focused on technical architecture, requirements analysis, and project delivery for enterprise clients."
+            },
+            {
+                "company": "AFP Cuprum",
+                "role": "Associate Engineer",
+                "period": "Dec 2021 - Apr 2023",
+                "description": "Built Salesforce applications using Apex, Lightning Web Components, JavaScript, and Vue.js. Worked on API integrations, technical architecture, and delivered solutions for pension fund management systems."
+            },
+            {
+                "company": "ZerviZ",
+                "role": "Dev Engineer",
+                "period": "Jun 2021 - Nov 2021",
+                "description": "Developed Salesforce customizations using Apex, Lightning Web Components, and Salesforce Lightning. Worked with APIs and focused on technical requirements analysis and project delivery."
+            },
+            {
+                "company": "R y C Consultores Asociados",
+                "role": "Project Engineer",
+                "period": "Nov 2020 - May 2021",
+                "description": "Worked on technical requirements gathering, Java development, API programming, and analytical capabilities for project delivery."
+            },
+            {
+                "company": "AndesLabs SpA",
+                "role": "Web Developer",
+                "period": "Sep 2020 - Nov 2020",
+                "description": "Full-stack JavaScript developer working with Vue.js and Node.js, building modern web applications with API integrations."
+            },
+            {
+                "company": "everis",
+                "role": "Developer",
+                "period": "Jun 2020 - Sep 2020",
+                "description": "Developed Java 8 applications using ZK framework, Hibernate, and SpringBoot for enterprise solutions."
+            },
+            {
+                "company": "Johannes Kepler Universität Linz",
+                "role": "Intern",
+                "period": "Sep 2019 - Dec 2019",
+                "description": "Integrated ISSE-developed modules into Microsoft Additio products as part of academic internship in Austria."
+            },
+            {
+                "company": "Friedrich-Schiller-Universität Jena",
+                "role": "Intern",
+                "period": "Dec 2018 - Jan 2019",
+                "description": "Developed mobile application using Flutter to support research activities during academic internship in Germany."
+            }
+        ]
+    },
+    "es": {
+        "greeting": "Hola, soy un",
+        "footer": "Primero, no soy tu amigo...",
+        "profile": {
+            "name": "Camilo Cuevas",
+            "role": "Desarrollador Salesforce Senior",
+            "location": "Temuco, Chile",
+            "stats": [
+                {
+                    "label": "Años de Experiencia",
+                    "value": "5+"
+                },
+                {
+                    "label": "Certificaciones",
+                    "value": "5"
+                }
+            ]
+        },
+        "aboutMe": "Soy un Desarrollador Salesforce con 5 años de experiencia profunda en Apex y Lightning Web Components. Soy el desarrollador en quien confías para mantener la estabilidad, me enfoco en resolver problemas de negocio complejos antes de que se vuelvan urgencias. Ya sea modernizando código legacy, diseñando soluciones escalables, o implementando manejo de errores robusto, me comprometo completamente. Tuve la suerte de hacer pasantías en Alemania y Austria a través de IAESTE, que me enseñó a adaptarme rápido y resolver al vuelo.",
+        "beyondCode": "Cuando no estoy diseñando soluciones escalables, ando con la cámara sacando fotos o tocando violín y viola—algo que hago desde los 7 años. Le pongo la misma dedicación y pasión al código que a la música y la fotografía.",
+        "ui": {
+            "blogLink": "qué he estado haciendo",
+            "aboutMeTitle": "Sobre Mí",
+            "beyondCodeTitle": "Más Allá del Código",
+            "experienceTitle": "Experiencia",
+            "certificationsTitle": "Certificaciones",
+            "techStackTitle": "Stack Tecnológico"
+        },
+        "tech": [
+            "Apex (Triggers, Batch, Queueable, Schedulable)",
+            "Lightning Web Components",
+            "Patrones de Integración (REST APIs, Platform Events)",
+            "Flow Builder y Automatización de Procesos",
+            "Optimización SOQL/SOSL",
+            "Testing Apex y Mocking",
+            "Salesforce DX y CI/CD"
+        ],
+        "certifications": {
+            "sections": [
+                {
+                    "title": "Las Importantes",
+                    "items": [
+                        "Salesforce Certified Platform Developer",
+                        "Salesforce Certified Platform App Builder"
+                    ]
+                },
+                {
+                    "title": "El Resto (¡También Cuentan!)",
+                    "items": [
+                        "Salesforce Certified Platform Foundations",
+                        "Salesforce Certified Marketing Cloud Engagement Foundations",
+                        "Salesforce Certified AI Associate"
+                    ]
+                }
+            ]
+        },
+        "experience": [
+            {
+                "company": "BancoEstado",
+                "role": "Ingeniero de Procesos, Sistemas y Tecnología",
+                "period": "Feb 2025 - Actualidad",
+                "description": "Liderando proyectos de desarrollo Salesforce, armando soluciones personalizadas con Apex y Lightning Web Components para automatizar procesos e integrar sistemas."
+            },
+            {
+                "company": "Tata Consultancy Services",
+                "role": "Analista de TI",
+                "period": "Abr 2023 - Feb 2025",
+                "description": "Desarrollé soluciones Salesforce con Apex, Lightning Web Components y Salesforce Lightning. Me enfocaba en arquitectura técnica, análisis de requisitos y entregar proyectos para clientes enterprise."
+            },
+            {
+                "company": "AFP Cuprum",
+                "role": "Ingeniero Asociado",
+                "period": "Dic 2021 - Abr 2023",
+                "description": "Armé aplicaciones Salesforce con Apex, Lightning Web Components, JavaScript y Vue.js. Trabajé en integraciones API, arquitectura técnica y entregué soluciones para sistemas de gestión de fondos de pensiones."
+            },
+            {
+                "company": "ZerviZ",
+                "role": "Ingeniero de Desarrollo",
+                "period": "Jun 2021 - Nov 2021",
+                "description": "Desarrollé personalizaciones Salesforce con Apex, Lightning Web Components y Salesforce Lightning. Trabajé con APIs enfocándome en análisis de requisitos técnicos y entrega de proyectos."
+            },
+            {
+                "company": "R y C Consultores Asociados",
+                "role": "Ingeniero de Proyecto",
+                "period": "Nov 2020 - May 2021",
+                "description": "Trabajé en levantar requisitos técnicos, desarrollo Java, programación de APIs y capacidades de análisis para entregar proyectos."
+            },
+            {
+                "company": "AndesLabs SpA",
+                "role": "Desarrollador Web",
+                "period": "Sep 2020 - Nov 2020",
+                "description": "Desarrollador FullStack JavaScript trabajando con Vue.js y Node.js, armando aplicaciones web modernas con integraciones API."
+            },
+            {
+                "company": "everis",
+                "role": "Desarrollador",
+                "period": "Jun 2020 - Sep 2020",
+                "description": "Desarrollé aplicaciones Java 8 con el framework ZK, Hibernate y SpringBoot para soluciones enterprise."
+            },
+            {
+                "company": "Johannes Kepler Universität Linz",
+                "role": "Estudiante en prácticas",
+                "period": "Sep 2019 - Dic 2019",
+                "description": "Integré módulos desarrollados por ISSE en productos Microsoft Additio como parte de pasantía académica en Austria."
+            },
+            {
+                "company": "Friedrich-Schiller-Universität Jena",
+                "role": "Estudiante en prácticas",
+                "period": "Dic 2018 - Ene 2019",
+                "description": "Desarrollé aplicación móvil usando Flutter para apoyar actividades de investigación durante pasantía académica en Alemania."
+            }
+        ]
+    }
+}

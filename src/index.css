@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: var(--theme-base);
+    color: var(--theme-text);
+    font-family: 'JetBrains Mono', monospace;
+    transition: background-color 0.3s, color 0.3s;
+  }
+}
+
+:root {
+  /* Mocha (Dark) - Default */
+  --theme-base: #1e1e2e;
+  --theme-text: #e5e9f0;
+  --theme-peach: #fab387;
+  --theme-blue: #89b4fa;
+  --theme-overlay: #9a9fbc;
+}
+
+html.light {
+  /* Latte (Light) */
+  --theme-base: #eff1f5;
+  --theme-text: #4c4f69;
+  --theme-peach: #fe640b;
+  --theme-blue: #1e66f5;
+  --theme-overlay: #9ca0b0;
+}
+
+@keyframes blink {
+
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-blink {
+  animation: blink 1s infinite;
+}
