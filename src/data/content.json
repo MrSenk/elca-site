@@ -58,9 +58,9 @@
         "experience": [
             {
                 "company": "BancoEstado",
-                "role": "Process, Systems and Technology Engineer",
+                "role": "Ingeniero de Procesos, Sistemas y Tecnología",
                 "period": "Feb 2025 - Present",
-                "description": "Leading Salesforce development projects, implementing custom solutions using Apex programming and Lightning Web Components for process automation and system integration."
+                "description": "Built custom Lightning Web Components and system integrations for COMEX project. Implementing custom solutions using Apex programming and Flows for process automations."
             },
             {
                 "company": "Tata Consultancy Services",
@@ -173,7 +173,7 @@
                 "company": "BancoEstado",
                 "role": "Ingeniero de Procesos, Sistemas y Tecnología",
                 "period": "Feb 2025 - Actualidad",
-                "description": "Liderando proyectos de desarrollo Salesforce, armando soluciones personalizadas con Apex y Lightning Web Components para automatizar procesos e integrar sistemas."
+                "description": "Construí Lightning Web Components y soluciones integradas para el proyecto COMEX. Implementé soluciones personalizadas utilizando Apex y Flows para automatización de procesos y integración de sistemas."
             },
             {
                 "company": "Tata Consultancy Services",
@@ -183,13 +183,13 @@
             },
             {
                 "company": "AFP Cuprum",
-                "role": "Ingeniero Asociado",
+                "role": "Associate Engineer",
                 "period": "Dic 2021 - Abr 2023",
                 "description": "Armé aplicaciones Salesforce con Apex, Lightning Web Components, JavaScript y Vue.js. Trabajé en integraciones API, arquitectura técnica y entregué soluciones para sistemas de gestión de fondos de pensiones."
             },
             {
                 "company": "ZerviZ",
-                "role": "Ingeniero de Desarrollo",
+                "role": "Dev Engineer",
                 "period": "Jun 2021 - Nov 2021",
                 "description": "Desarrollé personalizaciones Salesforce con Apex, Lightning Web Components y Salesforce Lightning. Trabajé con APIs enfocándome en análisis de requisitos técnicos y entrega de proyectos."
             },
