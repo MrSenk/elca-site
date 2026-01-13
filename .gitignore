@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # AI Agent Project Guide
-PROJECT_GUIDE.md
+.agent/*
