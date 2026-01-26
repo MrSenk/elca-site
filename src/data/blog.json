@@ -1450,6 +1450,385 @@
                         ]
                     }
                 ]
+            },
+            {
+                "id": "dynamic-component-rendering",
+                "title": "Dynamic Component Rendering: lwc:is and Why You Need It",
+                "date": "2026-01-14",
+                "summary": "Stop polluting your templates with conditional rendering. Learn how to swap entire components at runtime with lwc:is.",
+                "content": [
+                    {
+                        "type": "text",
+                        "value": "If you've built a multi-view interface in LWC, you've probably done this: a template full of <template lwc:if> or <template if:true> blocks, each rendering a different component. It works. It's also ugly, hard to maintain, and loads everything upfront even if the user never sees half of it."
+                    },
+                    {
+                        "type": "text",
+                        "value": "There's a better way. The lwc:is directive lets you swap entire components at runtime. Clean templates. Lazy loading. One placeholder, infinite possibilities."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Pattern"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Here's the setup. Your template has a single component placeholder:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template>\n    <lwc:component lwc:is={constructorRef} \n        lwc:ref=\"mainComponent\"\n        ontoggleview={handleToggle}\n        onrefresh={refreshData}\n        lwc:spread={childProps}>\n    </lwc:component>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "That's it. No lwc:if or if:true. No duplication. Just one dynamic slot."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Magic: Component Constructors"
+                    },
+                    {
+                        "type": "text",
+                        "value": "The lwc:is directive doesn't take a string. It takes a component constructor. You get that constructor via dynamic imports:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "handleToggle() {\n    if (this.currentView === 'list') {\n        this.currentView = 'admin';\n        import('c/administrationComponent')\n            .then(({ default: constructor }) => this.constructorRef = constructor);\n    } else {\n        this.currentView = 'list';\n        import('c/listComponent')\n            .then(({ default: constructor }) => this.constructorRef = constructor);\n    }\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "When constructorRef changes, LWC destroys the old component and renders the new one. Same DOM location. Same event handlers. Different component."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Why This Matters"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Lazy Loading**: Components are only loaded when needed. Your initial bundle is smaller. Page loads faster."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Clean Templates**: No more template bloat. Compare this to having 5 different <template lwc:if> blocks for 5 different views. Which would you rather maintain?"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Scalability**: Adding a new view? One more import statement. That's it. No template changes."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Passing Data: lwc:spread"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Use lwc:spread to pass properties to the dynamic component:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "// Parent component\nchildProps = {\n    recordId: this.recordId,\n    mode: 'edit'\n};"
+                    },
+                    {
+                        "type": "text",
+                        "value": "The spread operator passes all properties to whatever component is currently rendered. Change the component, same props flow in."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Accessing Component APIs: lwc:ref"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Need to call a method on the rendered component? Use lwc:ref:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "refreshData() {\n    const component = this.refs.mainComponent;\n    if (component && component.refresh) {\n        component.refresh();\n    }\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Always check if the method exists. Different components might have different APIs."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "When to Use This"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Multi-step wizards**: Each step is a separate component. Progress through them dynamically."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**View toggles**: List view, card view, table view. Same data, different presentations."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Role-based UI**: Show different components based on user permissions or profiles."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Dashboard widgets**: Let users customize their dashboard by swapping widget types."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "When NOT to Use This"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Don't use dynamic rendering for simple show/hide scenarios. If you're just toggling visibility of a section, use lwc:if. It's simpler and more performant."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Don't use it if all components need to be loaded upfront anyway. Static imports are faster for that."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Error Handling"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Always handle import failures:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "import('c/someComponent')\n    .then(({ default: ctor }) => this.constructorRef = ctor)\n    .catch(error => {\n        console.error('Failed to load component:', error);\n        // Show fallback UI\n    });"
+                    },
+                    {
+                        "type": "text",
+                        "value": "If the import fails and you don't catch it, your users see a blank screen. Don't be that developer."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Bottom Line"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Dynamic component rendering with lwc:is is the difference between a clunky multi-page experience and a smooth SPA. Use it when you have distinct views that share a container. Your templates will be cleaner. Your bundles will be smaller. Your users will be happier."
+                    },
+                    {
+                        "type": "sources",
+                        "links": [
+                            {
+                                "title": "Dynamically Instantiate Components",
+                                "url": "https://developer.salesforce.com/docs/platform/lwc/guide/js-dynamic-components.html"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "conditional-rendering-lwc",
+                "title": "lwc:if vs if:true: Use the Modern One",
+                "date": "2026-01-14",
+                "summary": "if:true is legacy. lwc:if is the future. Here's why you should switch now.",
+                "content": [
+                    {
+                        "type": "text",
+                        "value": "If you're still using if:true and if:false in your LWC templates, you're using deprecated syntax. Salesforce introduced lwc:if, lwc:elseif, and lwc:else as the modern replacement, and they plan to remove the old directives eventually."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Let me show you why the new syntax is better and how to use it."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Old Way: if:true and if:false"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Before, you had to use separate template blocks with if:true and if:false:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- OLD: Don't do this anymore -->\n<template if:true={isLoading}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template if:false={isLoading}>\n    <div>Content loaded!</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "This works, but it's verbose. And when you have multiple conditions, it gets messy fast."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Modern Way: lwc:if, lwc:elseif, lwc:else"
+                    },
+                    {
+                        "type": "text",
+                        "value": "The new directives are cleaner and more intuitive:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- MODERN: Do this -->\n<template lwc:if={isLoading}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template lwc:else>\n    <div>Content loaded!</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Same result. Less code. More readable."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Killer Feature: lwc:elseif"
+                    },
+                    {
+                        "type": "text",
+                        "value": "This is where the new syntax shines. Multiple conditions are now clean:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={status === 'loading'}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template lwc:elseif={status === 'error'}>\n    <div class=\"error\">Something went wrong</div>\n</template>\n<template lwc:elseif={status === 'empty'}>\n    <div class=\"empty\">No records found</div>\n</template>\n<template lwc:else>\n    <div class=\"content\">{records}</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Try doing that with if:true and if:false. You'd need multiple boolean properties and a mess of negations. Not fun."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Real-World Examples"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Permission-based rendering:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={userRole === 'admin'}>\n    <c-admin-panel></c-admin-panel>\n</template>\n<template lwc:elseif={userRole === 'manager'}>\n    <c-manager-dashboard></c-manager-dashboard>\n</template>\n<template lwc:else>\n    <c-user-view></c-user-view>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Record state handling:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={record.data}>\n    <c-record-details record={record.data}></c-record-details>\n</template>\n<template lwc:elseif={record.error}>\n    <div class=\"error\">{record.error.message}</div>\n</template>\n<template lwc:else>\n    <lightning-spinner></lightning-spinner>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Feature flags:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={featureEnabled}>\n    <c-new-feature></c-new-feature>\n</template>\n<template lwc:else>\n    <c-legacy-feature></c-legacy-feature>\n</template>"
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Conditional Attributes"
+                    },
+                    {
+                        "type": "text",
+                        "value": "You can also conditionally render attributes on elements:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<lightning-button \n    label=\"Submit\"\n    disabled={isProcessing}\n    variant={isPrimary ? 'brand' : 'neutral'}>\n</lightning-button>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Use ternary operators for simple attribute conditions. Use lwc:if for entire elements."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Conditional CSS Classes"
+                    },
+                    {
+                        "type": "text",
+                        "value": "For styling, use template literals or computed getters:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<div class={containerClass}>\n    Content\n</div>"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "get containerClass() {\n    return `container ${this.isActive ? 'active' : ''} ${this.hasError ? 'error' : ''}`;\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Don't use lwc:if just to toggle classes. That's overkill."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "When NOT to Use Conditional Rendering"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Don't use it for visibility toggling.** If you're just hiding/showing an element, use CSS:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- BAD: Creates/destroys DOM unnecessarily -->\n<template lwc:if={isVisible}>\n    <div>Content</div>\n</template>\n\n<!-- GOOD: Just toggles visibility -->\n<div class={isVisible ? 'visible' : 'hidden'}>\n    Content\n</div>"
+                    },
+                    {
+                        "type": "code",
+                        "language": "css",
+                        "value": ".hidden {\n    display: none;\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Conditional rendering destroys and recreates DOM elements. CSS visibility is cheaper."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Important Considerations"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**1. Component State is Lost:** When lwc:if removes an element, its state is gone. If the condition becomes true again, the component reinitializes. If you need to preserve state, use CSS visibility instead."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**2. Performance:** Conditional rendering is fast, but creating/destroying components has a cost. If you're toggling frequently (like animations), use CSS."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**3. Truthy/Falsy:** lwc:if evaluates JavaScript truthiness. Empty strings, 0, null, undefined, and false are all falsy. Be careful with numbers:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- This WON'T render if count is 0 -->\n<template lwc:if={count}>\n    <div>Count: {count}</div>\n</template>\n\n<!-- This WILL render when count is 0 -->\n<template lwc:if={count !== undefined}>\n    <div>Count: {count}</div>\n</template>"
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Migration Strategy"
+                    },
+                    {
+                        "type": "text",
+                        "value": "You don't have to migrate everything at once. Start with new components. Gradually update existing ones during refactors. The old syntax still works, but it won't forever."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Search your codebase for if:true and if:false. Replace them with lwc:if and lwc:else. It's a straightforward find-and-replace in most cases."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "The Bottom Line"
+                    },
+                    {
+                        "type": "text",
+                        "value": "lwc:if is cleaner, more powerful, and future-proof. if:true is deprecated and will be removed. Switch now before you're forced to."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Your templates will be more readable. Your code reviews will be easier. And you won't have to scramble when Salesforce finally removes the old directives."
+                    },
+                    {
+                        "type": "sources",
+                        "links": [
+                            {
+                                "title": "Render DOM Elements Conditionally",
+                                "url": "https://developer.salesforce.com/docs/platform/lwc/guide/create-conditional.html"
+                            }
+                        ]
+                    }
+                ]
             }
         ]
     },
@@ -2904,6 +3283,385 @@
                             {
                                 "title": "TypeScript Type Definitions for LWC (Developer Preview)",
                                 "url": "https://developer.salesforce.com/docs/platform/lwc/guide/ts.html"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "dynamic-component-rendering",
+                "title": "Renderizado Dinámico de Componentes: lwc:is y Por Qué lo Necesitas",
+                "date": "2026-01-14",
+                "summary": "Deja de contaminar tus templates con renderizado condicional. Aprende a intercambiar componentes completos en tiempo de ejecución con lwc:is.",
+                "content": [
+                    {
+                        "type": "text",
+                        "value": "Si has construido una interfaz multi-vista en LWC, probablemente has hecho esto: un template lleno de bloques <template lwc:if> (o el viejo <template if:true>), cada uno renderizando un componente diferente. Funciona. También es feo, difícil de mantener, y carga todo de entrada aunque el usuario nunca vea la mitad."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Hay una mejor forma. La directiva lwc:is te permite intercambiar componentes completos en tiempo de ejecución. Templates limpios. Carga diferida. Un placeholder, infinitas posibilidades."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "El Patrón"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Aquí está la configuración. Tu template tiene un solo placeholder de componente:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template>\n    <lwc:component lwc:is={constructorRef} \n        lwc:ref=\"mainComponent\"\n        ontoggleview={handleToggle}\n        onrefresh={refreshData}\n        lwc:spread={childProps}>\n    </lwc:component>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Eso es todo. Sin lwc:if o if:true. Sin duplicación. Solo un slot dinámico."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Magia: Constructores de Componentes"
+                    },
+                    {
+                        "type": "text",
+                        "value": "La directiva lwc:is no recibe un string. Recibe un constructor de componente. Obtienes ese constructor mediante imports dinámicos:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "handleToggle() {\n    if (this.currentView === 'list') {\n        this.currentView = 'admin';\n        import('c/administrationComponent')\n            .then(({ default: constructor }) => this.constructorRef = constructor);\n    } else {\n        this.currentView = 'list';\n        import('c/listComponent')\n            .then(({ default: constructor }) => this.constructorRef = constructor);\n    }\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Cuando constructorRef cambia, LWC destruye el componente viejo y renderiza el nuevo. Misma ubicación DOM. Mismos event handlers. Componente diferente."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Por Qué Importa"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Carga Diferida**: Los componentes solo se cargan cuando se necesitan. Tu bundle inicial es más pequeño. La página carga más rápido."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Templates Limpios**: Se acabó la contaminación de templates. Compara esto con tener 5 bloques <template lwc:if> diferentes para 5 vistas diferentes. ¿Cuál preferirías mantener?"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Escalabilidad**: ¿Agregar una nueva vista? Una declaración import más. Eso es todo. Sin cambios en el template."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Pasando Datos: lwc:spread"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Usa lwc:spread para pasar propiedades al componente dinámico:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "// Componente padre\nchildProps = {\n    recordId: this.recordId,\n    mode: 'edit'\n};"
+                    },
+                    {
+                        "type": "text",
+                        "value": "El operador spread pasa todas las propiedades a cualquier componente que esté renderizado actualmente. Cambia el componente, las mismas props fluyen."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Accediendo APIs de Componentes: lwc:ref"
+                    },
+                    {
+                        "type": "text",
+                        "value": "¿Necesitas llamar un método en el componente renderizado? Usa lwc:ref:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "refreshData() {\n    const component = this.refs.mainComponent;\n    if (component && component.refresh) {\n        component.refresh();\n    }\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Siempre verifica si el método existe. Diferentes componentes pueden tener diferentes APIs."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Cuándo Usar Esto"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Wizards multi-paso**: Cada paso es un componente separado. Avanza a través de ellos dinámicamente."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Alternar vistas**: Vista de lista, vista de tarjetas, vista de tabla. Mismos datos, diferentes presentaciones."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**UI basada en roles**: Muestra diferentes componentes según permisos de usuario o perfiles."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Widgets de dashboard**: Permite a los usuarios personalizar su dashboard intercambiando tipos de widgets."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Cuándo NO Usar Esto"
+                    },
+                    {
+                        "type": "text",
+                        "value": "No uses renderizado dinámico para escenarios simples de mostrar/ocultar. Si solo estás alternando la visibilidad de una sección, usa lwc:if. Es más simple y más eficiente."
+                    },
+                    {
+                        "type": "text",
+                        "value": "No lo uses si todos los componentes necesitan cargarse de entrada de todas formas. Los imports estáticos son más rápidos para eso."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Manejo de Errores"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Siempre maneja las fallas de import:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "import('c/someComponent')\n    .then(({ default: ctor }) => this.constructorRef = ctor)\n    .catch(error => {\n        console.error('Failed to load component:', error);\n        // Muestra UI de respaldo\n    });"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Si el import falla y no lo capturas, tus usuarios ven una pantalla en blanco. No seas ese desarrollador."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Conclusión"
+                    },
+                    {
+                        "type": "text",
+                        "value": "El renderizado dinámico de componentes con lwc:is es la diferencia entre una experiencia multi-página torpe y una SPA fluida. Úsalo cuando tengas vistas distintas que comparten un contenedor. Tus templates serán más limpios. Tus bundles serán más pequeños. Tus usuarios serán más felices."
+                    },
+                    {
+                        "type": "sources",
+                        "links": [
+                            {
+                                "title": "Dynamically Instantiate Components",
+                                "url": "https://developer.salesforce.com/docs/platform/lwc/guide/js-dynamic-components.html"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "conditional-rendering-lwc",
+                "title": "lwc:if vs if:true: Usa el Moderno",
+                "date": "2026-01-14",
+                "summary": "if:true es legacy. lwc:if es el futuro. Aquí está por qué deberías cambiar ahora.",
+                "content": [
+                    {
+                        "type": "text",
+                        "value": "Si todavía usas if:true e if:false en tus templates LWC, estás usando sintaxis deprecada. Salesforce introdujo lwc:if, lwc:elseif y lwc:else como el reemplazo moderno, y planean eliminar las directivas viejas eventualmente."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Déjame mostrarte por qué la nueva sintaxis es mejor y cómo usarla."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Forma Vieja: if:true e if:false"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Antes, tenías que usar bloques de template separados con if:true e if:false:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- VIEJO: No hagas esto más -->\n<template if:true={isLoading}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template if:false={isLoading}>\n    <div>¡Contenido cargado!</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Esto funciona, pero es verboso. Y cuando tienes múltiples condiciones, se vuelve un desastre rápido."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Forma Moderna: lwc:if, lwc:elseif, lwc:else"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Las nuevas directivas son más limpias e intuitivas:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- MODERNO: Haz esto -->\n<template lwc:if={isLoading}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template lwc:else>\n    <div>¡Contenido cargado!</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Mismo resultado. Menos código. Más legible."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Característica Clave: lwc:elseif"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Aquí es donde la nueva sintaxis brilla. Múltiples condiciones ahora son limpias:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={status === 'loading'}>\n    <lightning-spinner></lightning-spinner>\n</template>\n<template lwc:elseif={status === 'error'}>\n    <div class=\"error\">Algo salió mal</div>\n</template>\n<template lwc:elseif={status === 'empty'}>\n    <div class=\"empty\">No se encontraron registros</div>\n</template>\n<template lwc:else>\n    <div class=\"content\">{records}</div>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Intenta hacer eso con if:true e if:false. Necesitarías múltiples propiedades booleanas y un desastre de negaciones. No es divertido."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Ejemplos del Mundo Real"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Renderizado basado en permisos:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={userRole === 'admin'}>\n    <c-admin-panel></c-admin-panel>\n</template>\n<template lwc:elseif={userRole === 'manager'}>\n    <c-manager-dashboard></c-manager-dashboard>\n</template>\n<template lwc:else>\n    <c-user-view></c-user-view>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Manejo de estado de registro:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={record.data}>\n    <c-record-details record={record.data}></c-record-details>\n</template>\n<template lwc:elseif={record.error}>\n    <div class=\"error\">{record.error.message}</div>\n</template>\n<template lwc:else>\n    <lightning-spinner></lightning-spinner>\n</template>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**Feature flags:**"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<template lwc:if={featureEnabled}>\n    <c-new-feature></c-new-feature>\n</template>\n<template lwc:else>\n    <c-legacy-feature></c-legacy-feature>\n</template>"
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Atributos Condicionales"
+                    },
+                    {
+                        "type": "text",
+                        "value": "También puedes renderizar atributos condicionalmente en elementos:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<lightning-button \n    label=\"Enviar\"\n    disabled={isProcessing}\n    variant={isPrimary ? 'brand' : 'neutral'}>\n</lightning-button>"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Usa operadores ternarios para condiciones de atributos simples. Usa lwc:if para elementos completos."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Clases CSS Condicionales"
+                    },
+                    {
+                        "type": "text",
+                        "value": "Para estilos, usa template literals o getters computados:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<div class={containerClass}>\n    Contenido\n</div>"
+                    },
+                    {
+                        "type": "code",
+                        "language": "javascript",
+                        "value": "get containerClass() {\n    return `container ${this.isActive ? 'active' : ''} ${this.hasError ? 'error' : ''}`;\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "No uses lwc:if solo para alternar clases. Eso es excesivo."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Cuándo NO Usar Renderizado Condicional"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**No lo uses para alternar visibilidad.** Si solo estás ocultando/mostrando un elemento, usa CSS:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- MALO: Crea/destruye DOM innecesariamente -->\n<template lwc:if={isVisible}>\n    <div>Contenido</div>\n</template>\n\n<!-- BUENO: Solo alterna visibilidad -->\n<div class={isVisible ? 'visible' : 'hidden'}>\n    Contenido\n</div>"
+                    },
+                    {
+                        "type": "code",
+                        "language": "css",
+                        "value": ".hidden {\n    display: none;\n}"
+                    },
+                    {
+                        "type": "text",
+                        "value": "El renderizado condicional destruye y recrea elementos DOM. La visibilidad CSS es más barata."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Consideraciones Importantes"
+                    },
+                    {
+                        "type": "text",
+                        "value": "**1. El Estado del Componente se Pierde:** Cuando lwc:if elimina un elemento, su estado desaparece. Si la condición se vuelve verdadera de nuevo, el componente se reinicializa. Si necesitas preservar el estado, usa visibilidad CSS en su lugar."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**2. Rendimiento:** El renderizado condicional es rápido, pero crear/destruir componentes tiene un costo. Si estás alternando frecuentemente (como animaciones), usa CSS."
+                    },
+                    {
+                        "type": "text",
+                        "value": "**3. Truthy/Falsy:** lwc:if evalúa la veracidad de JavaScript. Strings vacíos, 0, null, undefined y false son todos falsy. Ten cuidado con números:"
+                    },
+                    {
+                        "type": "code",
+                        "language": "html",
+                        "value": "<!-- Esto NO se renderizará si count es 0 -->\n<template lwc:if={count}>\n    <div>Count: {count}</div>\n</template>\n\n<!-- Esto SÍ se renderizará cuando count es 0 -->\n<template lwc:if={count !== undefined}>\n    <div>Count: {count}</div>\n</template>"
+                    },
+                    {
+                        "type": "heading",
+                        "value": "Estrategia de Migración"
+                    },
+                    {
+                        "type": "text",
+                        "value": "No tienes que migrar todo de una vez. Empieza con componentes nuevos. Actualiza gradualmente los existentes durante refactorizaciones. La sintaxis vieja todavía funciona, pero no lo hará para siempre."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Busca en tu código if:true e if:false. Reemplázalos con lwc:if y lwc:else. Es un buscar-y-reemplazar directo en la mayoría de los casos."
+                    },
+                    {
+                        "type": "heading",
+                        "value": "La Conclusión"
+                    },
+                    {
+                        "type": "text",
+                        "value": "lwc:if es más limpio, más poderoso y a prueba de futuro. if:true está deprecado y será eliminado. Cambia ahora antes de que te veas forzado a hacerlo."
+                    },
+                    {
+                        "type": "text",
+                        "value": "Tus templates serán más legibles. Tus code reviews serán más fáciles. Y no tendrás que apurarte cuando Salesforce finalmente elimine las directivas viejas."
+                    },
+                    {
+                        "type": "sources",
+                        "links": [
+                            {
+                                "title": "Render DOM Elements Conditionally",
+                                "url": "https://developer.salesforce.com/docs/platform/lwc/guide/create-conditional.html"
                             }
                         ]
                     }

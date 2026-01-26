@@ -49,7 +49,7 @@ const PortfolioHeader = () => {
     }, [location]);
 
     return (
-        <header className="sticky top-0 z-50 flex justify-between items-center py-4 mb-8 bg-theme-base backdrop-blur-sm bg-opacity-95 transition-colors duration-300 relative">
+        <header className="sticky top-0 z-50 flex justify-between items-center py-4 mb-8 glass-nav transition-all duration-300 relative">
             <div className="flex items-center gap-4 z-50">
                 <Link to="/">
                     <h1 className="text-xl font-bold bg-clip-text text-theme-text hover:text-theme-peach transition-colors cursor-pointer select-none">

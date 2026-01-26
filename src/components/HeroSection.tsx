@@ -1,41 +1,97 @@
-
 import { useApp } from '../context/AppContext';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import BentoTile from './BentoTile';
 
 const HeroSection = () => {
     const { content } = useApp();
+    const [displayedRole, setDisplayedRole] = useState('');
+    const [isTypingComplete, setIsTypingComplete] = useState(false);
+
+    const fullRole = content.profile.role;
+
+    useEffect(() => {
+        setDisplayedRole('');
+        setIsTypingComplete(false);
+
+        let index = 0;
+        const typingInterval = setInterval(() => {
+            if (index < fullRole.length) {
+                setDisplayedRole(fullRole.slice(0, index + 1));
+                index++;
+            } else {
+                clearInterval(typingInterval);
+                setIsTypingComplete(true);
+            }
+        }, 80);
+
+        return () => clearInterval(typingInterval);
+    }, [fullRole]);
 
     return (
-        <section className="flex flex-col gap-8 justify-center min-h-[30vh]">
-            <div className="flex flex-col gap-2">
-                <span className="text-theme-peach text-sm">{content.greeting}</span>
-                <h2 className="text-3xl md:text-5xl font-bold text-theme-text">
-                    {content.profile.role}
-                </h2>
-                <p className="text-theme-overlay text-lg">
-                    {content.profile.location}
-                </p>
+        <BentoTile colSpan={6} rowSpan={2} className="relative overflow-hidden" delay={0}>
+            {/* Animated background gradient */}
+            <div className="absolute inset-0 opacity-10">
+                <div className="absolute inset-0 bg-gradient-to-br from-theme-mauve via-theme-blue to-theme-sapphire animate-gradient bg-[length:200%_200%]" />
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-8">
-                {content.profile.stats.map((stat, idx) => (
-                    <div key={idx} className="flex flex-col gap-1 group">
-                        <span className="text-4xl md:text-5xl font-bold text-theme-peach group-hover:drop-shadow-[0_0_10px_rgba(250,179,135,0.3)] transition-all">
-                            {stat.value}
+            {/* Content */}
+            <div className="relative z-10 flex flex-col gap-8 h-full justify-between">
+                {/* Main heading section */}
+                <div className="flex flex-col gap-4">
+                    <span className="text-theme-peach text-sm md:text-base font-medium tracking-wide">
+                        {content.greeting}
+                    </span>
+
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
+                        <span className="gradient-text block mb-2">
+                            {content.profile.name}
                         </span>
-                        <span className="text-sm text-theme-overlay group-hover:text-theme-blue transition-colors">
-                            {stat.label}
+                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block">
+                            {displayedRole}
+                            <span className="animate-blink">|</span>
                         </span>
+                    </h1>
+
+                    <p className="text-theme-overlay text-base md:text-lg mt-2 flex items-center gap-2">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                        </svg>
+                        {content.profile.location}
+                    </p>
+                </div>
+
+                {/* Stats and CTA section */}
+                <div className="flex flex-col gap-6">
+                    {/* Stats grid */}
+                    <div className="grid grid-cols-2 gap-6 md:gap-8">
+                        {content.profile.stats.map((stat, idx) => (
+                            <div key={idx} className="flex flex-col gap-1 group">
+                                <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-mauve group-hover:scale-110 transition-transform duration-300 inline-block">
+                                    {stat.value}
+                                </span>
+                                <span className="text-xs sm:text-sm text-theme-overlay group-hover:text-theme-blue transition-colors">
+                                    {stat.label}
+                                </span>
+                            </div>
+                        ))}
                     </div>
-                ))}
+
+                    {/* CTA Button */}
+                    <div className={`transition-opacity duration-500 ${isTypingComplete ? 'opacity-100' : 'opacity-0'}`}>
+                        <Link
+                            to="/blog"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-theme-mauve to-theme-blue text-white font-medium hover:shadow-lg hover:shadow-theme-mauve/50 transition-all duration-300 hover:scale-105 group"
+                        >
+                            <span>→ {content.ui.blogLink}</span>
+                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </Link>
+                    </div>
+                </div>
             </div>
-            <Link
-                to="/blog"
-                className="text-theme-peach hover:text-theme-red underline underline-offset-4 decoration-2 text-lg font-medium mt-6 inline-block cursor-pointer transition-colors"
-            >
-                → {content.ui.blogLink}
-            </Link>
-        </section>
+        </BentoTile>
     );
 };
 

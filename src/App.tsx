@@ -14,15 +14,19 @@ import BlogPage from './pages/BlogPage';
 import BlogArticle from './pages/BlogArticle';
 import PageTransition from './components/PageTransition';
 
+import BentoGrid from './components/BentoGrid';
+
 function Portfolio() {
   return (
-    <main className="flex-grow flex flex-col gap-16 mt-20">
-      <HeroSection />
-      <AboutSection />
-      <BeyondCodeSection />
-      <ExperienceSection />
-      <CertificationsSection />
-      <TechStackSection />
+    <main className="flex-grow flex flex-col gap-8 mt-20">
+      <BentoGrid>
+        <HeroSection />
+        <AboutSection />
+        <BeyondCodeSection />
+        <TechStackSection />
+        <CertificationsSection />
+        <ExperienceSection />
+      </BentoGrid>
     </main>
   );
 }

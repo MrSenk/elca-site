@@ -13,7 +13,6 @@ const BlogArticle = () => {
     const { language } = useApp();
     const article = blogData[language].articles.find(a => a.id === id);
     const [displayedTitle, setDisplayedTitle] = useState('');
-    const [hasTyped, setHasTyped] = useState(false);
 
     // Function to parse markdown bold (**text**), italic (*text*) syntax and newlines
     const parseTextContent = (text: string) => {
@@ -59,7 +58,10 @@ const BlogArticle = () => {
     };
 
     useEffect(() => {
-        if (!article || hasTyped) return;
+        if (!article) return;
+
+        // Reset the animation when language changes
+        setDisplayedTitle('');
 
         let index = 0;
         const typingInterval = setInterval(() => {
@@ -68,12 +70,11 @@ const BlogArticle = () => {
                 index++;
             } else {
                 clearInterval(typingInterval);
-                setHasTyped(true);
             }
         }, 50);
 
         return () => clearInterval(typingInterval);
-    }, [article, hasTyped]);
+    }, [article, language]);
 
     if (!article) {
         return <Navigate to="/blog" replace />;

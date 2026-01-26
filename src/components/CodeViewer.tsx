@@ -69,6 +69,7 @@ const CodeViewer = ({ code, language }: CodeViewerProps) => {
     const highlightHTML = (code: string, colors: any) => {
         const commentPlaceholders: string[] = [];
         const stringPlaceholders: string[] = [];
+        const curlyPlaceholders: string[] = [];
 
         // 1. HTML Comments
         let highlighted = code.replace(
@@ -90,13 +91,23 @@ const CodeViewer = ({ code, language }: CodeViewerProps) => {
             }
         );
 
-        // 3. HTML Tags with attributes (handle multiline and various whitespace)
+        // 3. Curly braces with content (for JSX-like syntax)
         highlighted = highlighted.replace(
-            /(&lt;\/?)(\w[\w-]*)((?:\s+[\w-]+(?:=(?:__STRING_\d+__|{[^}]+}|[^>\s]+))?)*\s*)(\/?>|&gt;)/gs,
+            /\{([^}]+)\}/g,
+            (_match, content) => {
+                const placeholder = `__CURLY_${curlyPlaceholders.length}__`;
+                curlyPlaceholders.push(`<span style="color: ${colors.punctuation}">{</span><span style="color: ${colors.class}">${content}</span><span style="color: ${colors.punctuation}">}</span>`);
+                return placeholder;
+            }
+        );
+
+        // 4. HTML Tags with attributes (handle multiline and various whitespace)
+        highlighted = highlighted.replace(
+            /(&lt;\/?)(\w[\w-]*)((?:\s+[\w:-]+(?:=(?:__STRING_\d+__|__CURLY_\d+__|[^>\s]+))?)*\s*)(\/?>|&gt;)/gs,
             (_match, open, tagName, attrs, close) => {
                 const highlightedTag = `<span style="color: ${colors.punctuation}">${open}</span><span style="color: ${colors.tag}">${tagName}</span>`;
                 const highlightedAttrs = attrs.replace(
-                    /([\w-]+)(=)?/g,
+                    /([\w:-]+)(=)?/g,
                     (_m: string, attr: string, eq: string) => `<span style="color: ${colors.attribute}">${attr}</span>${eq || ''}`
                 );
                 const highlightedClose = `<span style="color: ${colors.punctuation}">${close}</span>`;
@@ -104,11 +115,16 @@ const CodeViewer = ({ code, language }: CodeViewerProps) => {
             }
         );
 
-        // 4. Template literals ${...}
+        // 5. Template literals ${...}
         highlighted = highlighted.replace(
             /\$\{([^}]+)\}/g,
             `<span style="color: ${colors.function}; font-weight: bold;">$\{</span><span style="color: ${colors.class}">$1</span><span style="color: ${colors.function}; font-weight: bold;">\}</span>`
         );
+
+        // Restore curly braces
+        curlyPlaceholders.forEach((replacement, index) => {
+            highlighted = highlighted.replace(`__CURLY_${index}__`, replacement);
+        });
 
         // Restore strings
         stringPlaceholders.forEach((replacement, index) => {

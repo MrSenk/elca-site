@@ -1,16 +1,21 @@
 
 import { useApp } from '../context/AppContext';
+import BentoTile from './BentoTile';
 
 const AboutSection = () => {
     const { content } = useApp();
 
     return (
-        <section id="about" className="flex flex-col gap-8">
-            <h3 className="text-2xl text-theme-blue font-bold">{content.ui.aboutMeTitle}</h3>
-            <p className="text-theme-text leading-relaxed">
-                {content.aboutMe}
-            </p>
-        </section>
+        <BentoTile colSpan={3} rowSpan={1} delay={0.1}>
+            <div className="flex flex-col gap-4 h-full">
+                <h2 className="text-2xl md:text-3xl font-bold text-theme-text">
+                    {content.ui.aboutMeTitle}
+                </h2>
+                <p className="text-theme-overlay leading-relaxed text-sm md:text-base">
+                    {content.aboutMe}
+                </p>
+            </div>
+        </BentoTile>
     );
 };
 

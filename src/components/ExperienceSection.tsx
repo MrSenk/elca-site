@@ -1,31 +1,41 @@
 
 import { useApp } from '../context/AppContext';
+import BentoTile from './BentoTile';
 
 const ExperienceSection = () => {
     const { content } = useApp();
 
     return (
-        <section id="experience" className="flex flex-col gap-8">
-            <h3 className="text-2xl text-theme-blue font-bold">{content.ui.experienceTitle}</h3>
-
-            <div className="flex flex-col gap-10 border-l-2 border-theme-overlay/40 dark:border-theme-overlay/20 ml-2 pl-8 relative">
-                {content.experience.map((exp, idx) => (
-                    <div key={idx} className="flex flex-col gap-2 relative">
-                        {/* Timeline dot */}
-                        <div className="absolute -left-[39px] top-1.5 w-4 h-4 rounded-full bg-theme-base border-2 border-theme-peach"></div>
-
-                        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between">
-                            <span className="text-xl text-theme-peach font-bold">{exp.company}</span>
-                            <span className="text-theme-overlay text-sm">{exp.period}</span>
+        <BentoTile colSpan={6} rowSpan={1} delay={0.3}>
+            <div className="flex flex-col gap-6 h-full">
+                <h2 className="text-2xl md:text-3xl font-bold text-theme-text">
+                    {content.ui.experienceTitle}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {content.experience.map((exp, idx) => (
+                        <div
+                            key={idx}
+                            className="flex flex-col gap-2 p-4 rounded-lg bg-theme-surface/30 border border-theme-overlay/10 hover:border-theme-blue/30 hover:bg-theme-surface/50 transition-all duration-300 group"
+                        >
+                            <div className="flex flex-col gap-1">
+                                <h3 className="text-sm md:text-base font-semibold text-theme-text group-hover:text-theme-mauve transition-colors">
+                                    {exp.company}
+                                </h3>
+                                <p className="text-xs md:text-sm text-theme-blue font-mono">
+                                    {exp.role}
+                                </p>
+                                <p className="text-xs text-theme-overlay">
+                                    {exp.period}
+                                </p>
+                            </div>
+                            <p className="text-xs text-theme-overlay leading-relaxed line-clamp-3">
+                                {exp.description}
+                            </p>
                         </div>
-                        <h4 className="text-theme-text font-medium">{exp.role}</h4>
-                        <p className="text-theme-overlay max-w-2xl leading-relaxed mt-2">
-                            {exp.description}
-                        </p>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </section>
+        </BentoTile>
     );
 };
 
