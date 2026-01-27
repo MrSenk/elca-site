@@ -44,7 +44,7 @@ const HeroSection = () => {
                         <span className="gradient-text block mb-2">
                             {content.profile.name}
                         </span>
-                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-none">
+                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-none">
                             {displayedRole}
                             <span className="animate-blink">|</span>
                         </span>
@@ -90,10 +90,10 @@ const HeroSection = () => {
 
                 {/* Profile Picture - Top Right with Blob Shape */}
                 {/* Visible on all screen sizes with appropriate sizing to prevent overlap */}
-                <div className="absolute top-4 right-4 md:top-6 md:right-6 lg:top-8 lg:right-8 z-20">
+                <div className="absolute top-1/4 right-4 md:top-20 md:right-6 lg:top-8 lg:right-8 z-20">
                     <div className="relative group">
                         {/* Blob shape container - responsive sizing optimized to prevent text overlap */}
-                        <div className="blob-shape relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-48 lg:h-48 xl:w-64 xl:h-64 2xl:w-80 2xl:h-80 overflow-hidden">
+                        <div className="blob-shape relative w-36 h-36 sm:w-48 sm:h-48 md:w-80 md:h-80 overflow-hidden">
                             <div className="blob-shape w-full h-full transition-all duration-300 scale-125 group-hover:scale-100">
                                 <img
                                     src={`${import.meta.env.BASE_URL}hehehe.png`}
