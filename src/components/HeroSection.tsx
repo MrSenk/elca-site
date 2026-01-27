@@ -96,7 +96,7 @@ const HeroSection = () => {
                         <div className="blob-shape relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-48 lg:h-48 xl:w-64 xl:h-64 2xl:w-80 2xl:h-80 overflow-hidden">
                             <div className="blob-shape w-full h-full transition-all duration-300 scale-125 group-hover:scale-100">
                                 <img
-                                    src="/hehehe.png"
+                                    src={`${import.meta.env.BASE_URL}hehehe.png`}
                                     alt={content.profile.name}
                                     className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 transition-all duration-500"
                                 />
