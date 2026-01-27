@@ -44,7 +44,7 @@ const HeroSection = () => {
                         <span className="gradient-text block mb-2">
                             {content.profile.name}
                         </span>
-                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-none">
+                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block max-w-[280px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[600px] xl:max-w-none">
                             {displayedRole}
                             <span className="animate-blink">|</span>
                         </span>
