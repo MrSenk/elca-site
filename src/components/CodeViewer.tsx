@@ -295,14 +295,14 @@ const CodeViewer = ({ code, language }: CodeViewerProps) => {
             <div className="absolute top-3 right-3 flex gap-2 items-center z-10">
                 <button
                     onClick={handleCopy}
-                    className="px-3 py-1 text-xs bg-theme-overlay/10 hover:bg-theme-overlay/20 text-theme-text border border-theme-overlay/20 rounded transition-colors"
+                    className="px-3 py-1 text-xs bg-theme-overlay/10 hover:bg-theme-overlay/20 text-theme-text border border-theme-overlay/20 rounded transition-colors duration-300"
                 >
                     {copied ? 'Copied!' : 'Copy'}
                 </button>
             </div>
-            <pre className="bg-theme-base border-2 border-theme-blue/30 rounded-lg p-6 overflow-x-auto">
+            <pre className="bg-theme-base border-2 border-theme-blue/30 rounded-lg p-6 overflow-x-auto transition-colors duration-300">
                 <code
-                    className="text-sm font-mono leading-relaxed whitespace-pre"
+                    className="text-sm font-mono leading-relaxed whitespace-pre transition-colors duration-300"
                     dangerouslySetInnerHTML={{ __html: highlightCode(code, language) }}
                 />
             </pre>

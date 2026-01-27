@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 interface BentoTileProps {
     children: ReactNode;
     colSpan?: 1 | 2 | 3 | 4 | 5 | 6;
-    rowSpan?: 1 | 2 | 3;
+    rowSpan?: 1 | 2 | 3 | 4;
     className?: string;
     hoverable?: boolean;
     delay?: number;
@@ -15,7 +15,7 @@ const BentoTile = ({
     colSpan = 1,
     rowSpan = 1,
     className = '',
-    hoverable = true,
+    hoverable = false,
     delay = 0,
 }: BentoTileProps) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -52,6 +52,7 @@ const BentoTile = ({
         1: 'row-span-1',
         2: 'row-span-2',
         3: 'row-span-3',
+        4: 'row-span-4',
     };
 
     return (

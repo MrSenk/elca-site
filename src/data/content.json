@@ -17,15 +17,15 @@
                 }
             ]
         },
-        "aboutMe": "I'm a Salesforce Developer with 5 years of deep expertise in Apex and Lightning Web Components. I'm the developer you rely on to keep systems stable, I thrive on solving complex business problems before they become emergencies. Whether it's modernizing legacy code, architecting scalable solutions, or implementing robust error handling, I'm all in. I had the opportunity to do internships in Germany and Austria through IAESTE, which taught me to adapt quickly and think on my feet.",
-        "beyondCode": "When I'm not architecting scalable solutions, you'll find me behind a camera capturing moments or playing violin and viola—something I've been doing since I was 7. I bring the same precision and passion to code that I do to music and photography.",
+        "aboutMe": "I'm a Salesforce Developer with 5 years of experience building stuff with Apex and Lightning Web Components. I'm the developer you rely on to keep systems stable, I like solving complex problems before they become emergencies. Whether it's modernizing legacy code, architecting scalable solutions, or implementing robust error handling, I'm all in. I had internships in Germany and Austria through IAESTE, which taught me to adapt quickly and think on my feet.",
+        "beyondCode": "I also like to take pictures while traveling abroad and playing some violin or viola if I'm feeling like it, I've done it since I was 7 so it's kind of a comfort zone for me. I consider myself half engineer and half artist.",
         "ui": {
             "blogLink": "what I've been up to",
-            "aboutMeTitle": "About Me",
-            "beyondCodeTitle": "Beyond Code",
+            "aboutMeTitle": "About me",
+            "beyondCodeTitle": "Beyond code",
             "experienceTitle": "Experience",
             "certificationsTitle": "Certifications",
-            "techStackTitle": "Tech Stack"
+            "techStackTitle": "Tech stack"
         },
         "tech": [
             "Apex (Triggers, Batch, Queueable, Schedulable)",
@@ -34,7 +34,7 @@
             "Flow Builder & Process Automation",
             "SOQL/SOSL Optimization",
             "Apex Testing & Mocking",
-            "Salesforce DX & CI/CD"
+            "Salesforce DX"
         ],
         "certifications": {
             "sections": [
@@ -113,7 +113,7 @@
         ]
     },
     "es": {
-        "greeting": "Hola, soy un",
+        "greeting": "Hola, soy",
         "footer": "Primero, no soy tu amigo...",
         "profile": {
             "name": "Camilo Cuevas",
@@ -130,24 +130,24 @@
                 }
             ]
         },
-        "aboutMe": "Soy un Desarrollador Salesforce con 5 años de experiencia profunda en Apex y Lightning Web Components. Soy el desarrollador en quien confías para mantener la estabilidad, me enfoco en resolver problemas de negocio complejos antes de que se vuelvan urgencias. Ya sea modernizando código legacy, diseñando soluciones escalables, o implementando manejo de errores robusto, me comprometo completamente. Tuve la suerte de hacer pasantías en Alemania y Austria a través de IAESTE, que me enseñó a adaptarme rápido y resolver al vuelo.",
-        "beyondCode": "Cuando no estoy diseñando soluciones escalables, ando con la cámara sacando fotos o tocando violín y viola—algo que hago desde los 7 años. Le pongo la misma dedicación y pasión al código que a la música y la fotografía.",
+        "aboutMe": "Soy Desarrollador Salesforce con 5 años de experiencia construyendo cosas con Apex y Lightning Web Components. Soy el desarrollador en el que confías para mantener los sistemas estables, me gusta resolver problemas complejos antes de que se conviertan en emergencias. Ya sea modernizando código legacy, diseñando soluciones escalables, o implementando manejo robusto de errores, me meto de lleno. Tuve pasantías en Alemania y Austria a través de IAESTE, que me enseñaron a adaptarme rápido y pensar sobre la marcha.",
+        "beyondCode": "También me gusta sacar fotos cuando viajo y tocar violín o viola si tengo ganas, lo hago desde los 7 así que es como mi zona de confort. Me considero mitad ingeniero y mitad artista.",
         "ui": {
             "blogLink": "qué he estado haciendo",
-            "aboutMeTitle": "Sobre Mí",
-            "beyondCodeTitle": "Más Allá del Código",
+            "aboutMeTitle": "Sobre mí",
+            "beyondCodeTitle": "Más allá del código",
             "experienceTitle": "Experiencia",
             "certificationsTitle": "Certificaciones",
-            "techStackTitle": "Stack Tecnológico"
+            "techStackTitle": "Stack tecnológico"
         },
         "tech": [
             "Apex (Triggers, Batch, Queueable, Schedulable)",
             "Lightning Web Components",
-            "Patrones de Integración (REST APIs, Platform Events)",
-            "Flow Builder y Automatización de Procesos",
+            "Patrones de integración (REST APIs, Platform Events)",
+            "Flow Builder y automatización de procesos",
             "Optimización SOQL/SOSL",
             "Testing Apex y Mocking",
-            "Salesforce DX y CI/CD"
+            "Salesforce DX"
         ],
         "certifications": {
             "sections": [

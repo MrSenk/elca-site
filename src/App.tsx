@@ -22,10 +22,10 @@ function Portfolio() {
       <BentoGrid>
         <HeroSection />
         <AboutSection />
-        <BeyondCodeSection />
-        <TechStackSection />
-        <CertificationsSection />
         <ExperienceSection />
+        <CertificationsSection />
+        <TechStackSection />
+        <BeyondCodeSection />
       </BentoGrid>
     </main>
   );

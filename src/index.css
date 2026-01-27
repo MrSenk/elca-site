@@ -19,7 +19,7 @@
   --theme-text: #cdd6f4;
   --theme-peach: #fab387;
   --theme-blue: #89b4fa;
-  --theme-overlay: #9399b2;
+  --theme-overlay: #a6adc8;
   --theme-surface: #313244;
   --theme-mauve: #cba6f7;
   --theme-sapphire: #74c7ec;
@@ -31,10 +31,10 @@
 html.light {
   /* Latte (Light) */
   --theme-base: #eff1f5;
-  --theme-text: #4c4f69;
+  --theme-text: #3c3f52;
   --theme-peach: #fe640b;
   --theme-blue: #1e66f5;
-  --theme-overlay: #9ca0b0;
+  --theme-overlay: #6c6f85;
   --theme-surface: #ccd0da;
   --theme-mauve: #8839ef;
   --theme-sapphire: #209fb5;
@@ -92,14 +92,27 @@ html.light {
   .glow-effect:hover {
     box-shadow: 0 0 20px rgba(203, 166, 247, 0.5);
   }
+
+  .blob-shape {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    transition: border-radius 0.3s ease-out;
+  }
+
+  .group:hover .blob-shape {
+    border-radius: 50%;
+  }
 }
 
 /* Animation Keyframes */
 @keyframes blink {
-  0%, 50% {
+
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -110,6 +123,7 @@ html.light {
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

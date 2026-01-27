@@ -6,13 +6,11 @@ import BentoTile from './BentoTile';
 const HeroSection = () => {
     const { content } = useApp();
     const [displayedRole, setDisplayedRole] = useState('');
-    const [isTypingComplete, setIsTypingComplete] = useState(false);
 
     const fullRole = content.profile.role;
 
     useEffect(() => {
         setDisplayedRole('');
-        setIsTypingComplete(false);
 
         let index = 0;
         const typingInterval = setInterval(() => {
@@ -21,7 +19,6 @@ const HeroSection = () => {
                 index++;
             } else {
                 clearInterval(typingInterval);
-                setIsTypingComplete(true);
             }
         }, 80);
 
@@ -47,7 +44,7 @@ const HeroSection = () => {
                         <span className="gradient-text block mb-2">
                             {content.profile.name}
                         </span>
-                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block">
+                        <span className="text-theme-text font-mono text-2xl sm:text-3xl md:text-4xl lg:text-5xl block max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-none">
                             {displayedRole}
                             <span className="animate-blink">|</span>
                         </span>
@@ -64,13 +61,13 @@ const HeroSection = () => {
                 {/* Stats and CTA section */}
                 <div className="flex flex-col gap-6">
                     {/* Stats grid */}
-                    <div className="grid grid-cols-2 gap-6 md:gap-8">
+                    <div className="grid grid-cols-2 gap-4 md:gap-6 max-w-md">
                         {content.profile.stats.map((stat, idx) => (
                             <div key={idx} className="flex flex-col gap-1 group">
-                                <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-mauve group-hover:scale-110 transition-transform duration-300 inline-block">
+                                <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-theme-mauve inline-block">
                                     {stat.value}
                                 </span>
-                                <span className="text-xs sm:text-sm text-theme-overlay group-hover:text-theme-blue transition-colors">
+                                <span className="text-xs sm:text-sm text-theme-overlay">
                                     {stat.label}
                                 </span>
                             </div>
@@ -78,7 +75,7 @@ const HeroSection = () => {
                     </div>
 
                     {/* CTA Button */}
-                    <div className={`transition-opacity duration-500 ${isTypingComplete ? 'opacity-100' : 'opacity-0'}`}>
+                    <div>
                         <Link
                             to="/blog"
                             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-theme-mauve to-theme-blue text-white font-medium hover:shadow-lg hover:shadow-theme-mauve/50 transition-all duration-300 hover:scale-105 group"
@@ -88,6 +85,25 @@ const HeroSection = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </Link>
+                    </div>
+                </div>
+
+                {/* Profile Picture - Top Right with Blob Shape */}
+                {/* Visible on all screen sizes with appropriate sizing to prevent overlap */}
+                <div className="absolute top-4 right-4 md:top-6 md:right-6 lg:top-8 lg:right-8 z-20">
+                    <div className="relative group">
+                        {/* Blob shape container - responsive sizing optimized to prevent text overlap */}
+                        <div className="blob-shape relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-48 lg:h-48 xl:w-64 xl:h-64 2xl:w-80 2xl:h-80 overflow-hidden">
+                            <div className="blob-shape w-full h-full transition-all duration-300 scale-125 group-hover:scale-100">
+                                <img
+                                    src="/hehehe.png"
+                                    alt={content.profile.name}
+                                    className="w-full h-full object-cover grayscale-[60%] group-hover:grayscale-0 transition-all duration-500"
+                                />
+                                {/* Overlay gradient */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-theme-mauve/20 to-theme-blue/20 mix-blend-overlay"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

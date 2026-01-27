@@ -81,62 +81,88 @@ const BlogArticle = () => {
     }
 
     return (
-        <div className="w-full px-6 py-20">
+        <div className="w-full px-4 py-12 md:py-20 max-w-[900px] mx-auto">
+            {/* Back button */}
             <Link
                 to="/blog"
-                className="text-theme-overlay hover:text-theme-peach transition-colors text-sm mb-8 inline-block"
+                className="inline-flex items-center gap-2 text-theme-overlay hover:text-theme-peach transition-colors text-sm mb-8 group"
             >
-                {language === 'en' ? "← back to blog" : "← volver al blog"}
+                <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>{language === 'en' ? "back to blog" : "volver al blog"}</span>
             </Link>
 
             <article>
+                {/* Header */}
                 <header className="mb-12">
-                    <h1 className="text-4xl md:text-5xl font-bold text-theme-text mb-4">
+                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-theme-text mb-4">
                         {displayedTitle}
                         <span className="animate-blink">|</span>
                     </h1>
-                    <time className="text-theme-overlay text-sm">
-                        {new Date(article.date).toLocaleDateString(language === 'en' ? 'en-US' : 'es-ES', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        })}
-                    </time>
+                    <div className="flex items-center gap-4 text-sm">
+                        <time className="text-theme-overlay">
+                            {new Date(article.date).toLocaleDateString(language === 'en' ? 'en-US' : 'es-ES', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            })}
+                        </time>
+                        <span className="text-theme-overlay">•</span>
+                        <span className="text-theme-mauve text-xs uppercase tracking-wide font-semibold">
+                            {(() => {
+                                // Calculate read time based on word count (200 words per minute)
+                                const wordCount = article.content
+                                    .filter(b => b.type === 'text')
+                                    .reduce((total, block) => {
+                                        const words = block.value.split(/\s+/).length;
+                                        return total + words;
+                                    }, 0);
+                                const readTime = Math.max(1, Math.ceil(wordCount / 200));
+                                return `${readTime} ${language === 'en' ? 'min read' : 'min de lectura'}`;
+                            })()}
+                        </span>
+                    </div>
                 </header>
 
+                {/* Content */}
                 <div className="prose prose-invert max-w-none">
                     {article.content.map((block, index) => {
                         switch (block.type) {
                             case 'text':
                                 return (
-                                    <p key={index} className="text-theme-overlay leading-relaxed mb-6">
+                                    <p key={index} className="text-theme-overlay leading-relaxed mb-6 text-base md:text-lg">
                                         {parseTextContent(block.value)}
                                     </p>
                                 );
                             case 'heading':
                                 return (
-                                    <h2 key={index} className="text-2xl font-bold text-theme-blue mt-12 mb-4">
-                                        {block.value}
+                                    <h2 key={index} className="text-2xl md:text-3xl font-bold text-theme-text mt-12 mb-6 flex items-center gap-3">
+                                        <span className="text-theme-mauve">#</span>
+                                        <span>{block.value}</span>
                                     </h2>
                                 );
                             case 'code':
                                 return (
-                                    <CodeViewer
-                                        key={index}
-                                        code={block.value}
-                                        language={block.language || 'text'}
-                                    />
+                                    <div key={index} className="my-8">
+                                        <CodeViewer
+                                            code={block.value}
+                                            language={block.language || 'text'}
+                                        />
+                                    </div>
                                 );
                             case 'image':
                                 return (
-                                    <figure key={index} className="my-8">
-                                        <img
-                                            src={block.src}
-                                            alt={block.alt || ''}
-                                            className="w-full rounded-lg border border-theme-overlay/20"
-                                        />
+                                    <figure key={index} className="my-10">
+                                        <div className="glass-tile p-4">
+                                            <img
+                                                src={block.src}
+                                                alt={block.alt || ''}
+                                                className="w-full rounded-lg"
+                                            />
+                                        </div>
                                         {block.alt && (
-                                            <figcaption className="text-sm text-theme-overlay/60 mt-2 text-center">
+                                            <figcaption className="text-sm text-theme-overlay mt-3 text-center italic">
                                                 {block.alt}
                                             </figcaption>
                                         )}
@@ -144,9 +170,10 @@ const BlogArticle = () => {
                                 );
                             case 'sources':
                                 return (
-                                    <div key={index} className="mt-12 pt-8 border-t border-theme-overlay/20">
-                                        <h2 className="text-2xl font-bold text-theme-blue mb-4">
-                                            {language === 'en' ? 'Sources & Further Reading' : 'Fuentes y Lectura Adicional'}
+                                    <div key={index} className="mt-16 pt-8 border-t border-theme-overlay/20">
+                                        <h2 className="text-2xl md:text-3xl font-bold text-theme-text mb-6 flex items-center gap-3">
+                                            <span className="text-theme-blue">📚</span>
+                                            <span>{language === 'en' ? 'Sources & Further Reading' : 'Fuentes y Lectura Adicional'}</span>
                                         </h2>
                                         <ul className="space-y-3">
                                             {block.links.map((link, linkIndex) => (
@@ -155,10 +182,10 @@ const BlogArticle = () => {
                                                         href={link.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="text-theme-peach hover:text-theme-blue transition-colors inline-flex items-center gap-2"
+                                                        className="glass-tile p-4 inline-flex items-center gap-3 group hover:border-theme-blue/50"
                                                     >
-                                                        <span>→</span>
-                                                        <span>{link.title}</span>
+                                                        <span className="text-theme-mauve group-hover:translate-x-1 transition-transform">→</span>
+                                                        <span className="text-theme-text group-hover:text-theme-blue transition-colors">{link.title}</span>
                                                     </a>
                                                 </li>
                                             ))}
@@ -172,11 +199,15 @@ const BlogArticle = () => {
                 </div>
             </article>
 
+            {/* Bottom back button */}
             <Link
                 to="/blog"
-                className="text-theme-overlay hover:text-theme-peach transition-colors text-sm mt-8 inline-block"
+                className="inline-flex items-center gap-2 text-theme-overlay hover:text-theme-peach transition-colors text-sm mt-12 group"
             >
-                {language === 'en' ? "← back to blog" : "← volver al blog"}
+                <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span>{language === 'en' ? "back to blog" : "volver al blog"}</span>
             </Link>
         </div>
     );
