@@ -7,57 +7,80 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base theme colors
-        'theme-base': 'var(--theme-base)',
-        'theme-text': 'var(--theme-text)',
-        'theme-peach': 'var(--theme-peach)',
-        'theme-blue': 'var(--theme-blue)',
-        'theme-overlay': 'var(--theme-overlay)',
-        'theme-surface': 'var(--theme-surface)',
-        // Extended Catppuccin palette
-        'theme-mauve': 'var(--theme-mauve)',
-        'theme-sapphire': 'var(--theme-sapphire)',
-        'theme-green': 'var(--theme-green)',
-        'theme-red': 'var(--theme-red)',
-        'theme-yellow': 'var(--theme-yellow)',
+        'bb-void':   'var(--bb-void)',
+        'bb-rust':   'var(--bb-rust)',
+        'bb-panel':  'var(--bb-panel)',
+        'bb-amber':  'var(--bb-amber)',
+        'bb-cyan':   'var(--bb-cyan)',
+        'bb-red':    'var(--bb-red)',
+        'bb-text':   'var(--bb-text)',
+        'bb-dim':    'var(--bb-dim)',
+        'bb-border': 'var(--bb-border)',
       },
       fontFamily: {
-        mono: ['"JetBrains Mono"', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-      },
-      backdropBlur: {
-        xs: '2px',
+        display:  ['"Orbitron"', 'sans-serif'],
+        terminal: ['"VT323"', 'monospace'],
+        mono:     ['"Share Tech Mono"', '"Fira Code"', 'monospace'],
+        sans:     ['"Share Tech Mono"', 'system-ui', 'sans-serif'],
       },
       animation: {
-        'fade-in': 'fadeIn 0.5s ease-out',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'glow': 'glow 2s ease-in-out infinite',
-        'gradient': 'gradient 8s linear infinite',
+        'flicker':    'flicker 8s step-end infinite',
+        'blink':      'blink 1s step-end infinite',
+        'grain':      'grainShift 0.15s steps(1) infinite',
+        'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+        'glitch':     'glitch 0.3s steps(2) forwards',
+        'slide-in':   'slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+        'reveal':     'reveal 0.6s ease-out forwards',
+        'scan-drift': 'scanDrift 12s linear infinite',
       },
       keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        flicker: {
+          '0%, 95%, 97%, 99%': { opacity: '1' },
+          '96%, 98%':           { opacity: '0.98' },
+          '100%':               { opacity: '1' },
         },
-        slideUp: {
-          '0%': { transform: 'translateY(20px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
+        blink: {
+          '0%, 50%':   { opacity: '1' },
+          '51%, 100%': { opacity: '0' },
         },
-        glow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(203, 166, 247, 0.3)' },
-          '50%': { boxShadow: '0 0 30px rgba(203, 166, 247, 0.6)' },
+        grainShift: {
+          '0%':   { transform: 'translate(0, 0)' },
+          '25%':  { transform: 'translate(-2px, 2px)' },
+          '50%':  { transform: 'translate(2px, -1px)' },
+          '75%':  { transform: 'translate(-1px, -2px)' },
+          '100%': { transform: 'translate(1px, 1px)' },
         },
-        gradient: {
-          '0%, 100%': { backgroundPosition: '0% 50%' },
-          '50%': { backgroundPosition: '100% 50%' },
+        glowPulse: {
+          '0%, 100%': { opacity: '0.7' },
+          '50%':      { opacity: '1' },
+        },
+        glitch: {
+          '0%':   { transform: 'translate(0)' },
+          '25%':  { transform: 'translate(-3px, 1px)' },
+          '50%':  { transform: 'translate(3px, -1px)' },
+          '75%':  { transform: 'translate(-1px, 2px)' },
+          '100%': { transform: 'translate(0)' },
+        },
+        slideIn: {
+          '0%':   { opacity: '0', transform: 'translateY(16px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        reveal: {
+          '0%':   { opacity: '0', clipPath: 'inset(0 100% 0 0)' },
+          '100%': { opacity: '1', clipPath: 'inset(0 0% 0 0)' },
+        },
+        scanDrift: {
+          '0%':   { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '0 200px' },
         },
       },
       boxShadow: {
-        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.1)',
-        'glass-hover': '0 12px 48px 0 rgba(0, 0, 0, 0.15)',
+        'amber-glow': '0 0 12px rgba(255, 176, 0, 0.4)',
+        'cyan-glow':  '0 0 12px rgba(0, 240, 255, 0.4)',
+        'red-glow':   '0 0 12px rgba(223, 32, 32, 0.4)',
+        'panel':      'inset 0 1px 0 rgba(255,176,0,0.06), 0 4px 24px rgba(0,0,0,0.6)',
       },
     },
   },
   plugins: [],
 }
-

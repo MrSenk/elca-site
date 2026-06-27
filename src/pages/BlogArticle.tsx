@@ -1,191 +1,168 @@
-
-import { useState, useEffect } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
-import { useApp } from '../context/AppContext';
+import { useApp } from '../hooks/useApp';
 import blogDataRaw from '../data/blog.json';
 import type { BlogData } from '../types';
 import CodeViewer from '../components/CodeViewer';
+import { useTypingEffect } from '../hooks/useTypingEffect';
 
 const blogData = blogDataRaw as BlogData;
 
 const BlogArticle = () => {
     const { id } = useParams<{ id: string }>();
-    const { language } = useApp();
+    const { language, content } = useApp();
     const article = blogData[language].articles.find(a => a.id === id);
-    const [displayedTitle, setDisplayedTitle] = useState('');
+    const displayedTitle = useTypingEffect(article?.title ?? '', 50);
 
-    // Function to parse markdown bold (**text**), italic (*text*) syntax and newlines
     const parseTextContent = (text: string) => {
-        // First split by newlines to handle list items
         const lines = text.split('\n');
-
         return lines.map((line, lineIndex) => {
-            // Parse both bold and italic markdown
-            // First, split by bold (**text**), then handle italic (*text*) in the remaining parts
             const boldParts = line.split(/(\*\*.*?\*\*)/g);
-
             const parsedLine = boldParts.map((part, partIndex) => {
                 if (part.startsWith('**') && part.endsWith('**')) {
-                    // Remove the ** markers and render as bold
-                    const boldText = part.slice(2, -2);
-                    return <strong key={`${lineIndex}-${partIndex}`} className="font-bold text-theme-text">{boldText}</strong>;
+                    return (
+                        <strong key={`${lineIndex}-${partIndex}`}
+                            style={{ color: 'var(--bb-amber)', fontWeight: 'bold' }}>
+                            {part.slice(2, -2)}
+                        </strong>
+                    );
                 }
-
-                // For non-bold parts, check for italic (*text*)
                 const italicParts = part.split(/(\*[^*]+\*)/g);
                 return italicParts.map((italicPart, italicIndex) => {
                     if (italicPart.startsWith('*') && italicPart.endsWith('*') && italicPart.length > 2) {
-                        // Remove the * markers and render as italic
-                        const italicText = italicPart.slice(1, -1);
-                        return <em key={`${lineIndex}-${partIndex}-${italicIndex}`} className="italic text-theme-text">{italicText}</em>;
+                        return (
+                            <em key={`${lineIndex}-${partIndex}-${italicIndex}`}
+                                style={{ color: 'var(--bb-cyan)', fontStyle: 'italic' }}>
+                                {italicPart.slice(1, -1)}
+                            </em>
+                        );
                     }
                     return italicPart;
                 });
             });
-
-            // Add line break after each line except the last one
             if (lineIndex < lines.length - 1) {
-                return (
-                    <span key={lineIndex}>
-                        {parsedLine}
-                        <br />
-                    </span>
-                );
+                return <span key={lineIndex}>{parsedLine}<br /></span>;
             }
-
             return <span key={lineIndex}>{parsedLine}</span>;
         });
     };
 
-    useEffect(() => {
-        if (!article) return;
+    const formatDate = (dateStr: string) => {
+        const d = new Date(dateStr);
+        return d.toLocaleDateString(language === 'en' ? 'en-US' : 'es-ES', {
+            year: 'numeric', month: 'long', day: 'numeric',
+        });
+    };
 
-        // Reset the animation when language changes
-        setDisplayedTitle('');
+    if (!article) return <Navigate to="/blog" replace />;
 
-        let index = 0;
-        const typingInterval = setInterval(() => {
-            if (index < article.title.length) {
-                setDisplayedTitle(article.title.slice(0, index + 1));
-                index++;
-            } else {
-                clearInterval(typingInterval);
-            }
-        }, 50);
-
-        return () => clearInterval(typingInterval);
-    }, [article, language]);
-
-    if (!article) {
-        return <Navigate to="/blog" replace />;
-    }
+    const wordCount = article.content
+        .filter(b => b.type === 'text')
+        .reduce((total, block) => total + block.value.split(/\s+/).length, 0);
+    const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
     return (
-        <div className="w-full px-4 py-12 md:py-20 max-w-[900px] mx-auto">
-            {/* Back button */}
+        <div className="w-full px-4 py-8 md:py-12 max-w-[900px] mx-auto">
+            {/* Back */}
             <Link
                 to="/blog"
-                className="inline-flex items-center gap-2 text-theme-overlay hover:text-theme-peach transition-colors text-sm mb-8 group"
+                className="inline-flex items-center gap-2 font-terminal text-sm text-[var(--bb-dim)] hover:text-[var(--bb-amber)] transition-colors mb-8 tracking-widest"
             >
-                <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>{language === 'en' ? "back to blog" : "volver al blog"}</span>
+                &lt; {content.ui.blogReturnToArchives}
             </Link>
 
             <article>
-                {/* Header */}
-                <header className="mb-12">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-theme-text mb-4">
+                {/* Article header */}
+                <header className="mb-10 pb-6 border-b border-[var(--bb-border)]">
+                    <p className="font-terminal text-[var(--bb-dim)] text-xs tracking-[0.3em] mb-3">
+                        INTELLIGENCE REPORT // レポート
+                    </p>
+                    <h1 className="font-display font-black tracking-wider mb-4"
+                        style={{
+                            fontSize: 'clamp(1.5rem, 4vw, 2.75rem)',
+                            color: 'var(--bb-amber)',
+                            textShadow: '2px 0 0 rgba(223,32,32,0.7), -2px 0 0 rgba(0,240,255,0.7)',
+                            filter: 'drop-shadow(0 0 8px rgba(255,176,0,0.35))',
+                            lineHeight: 1.15,
+                        }}>
                         {displayedTitle}
-                        <span className="animate-blink">|</span>
+                        <span className="animate-blink" style={{ color: 'var(--bb-amber)' }}>_</span>
                     </h1>
-                    <div className="flex items-center gap-4 text-sm">
-                        <time className="text-theme-overlay">
-                            {new Date(article.date).toLocaleDateString(language === 'en' ? 'en-US' : 'es-ES', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })}
+
+                    <div className="flex items-center gap-4 flex-wrap">
+                        <time className="font-terminal text-[var(--bb-dim)] text-xs tracking-widest">
+                            [{formatDate(article.date).toUpperCase()}]
                         </time>
-                        <span className="text-theme-overlay">•</span>
-                        <span className="text-theme-mauve text-xs uppercase tracking-wide font-semibold">
-                            {(() => {
-                                // Calculate read time based on word count (200 words per minute)
-                                const wordCount = article.content
-                                    .filter(b => b.type === 'text')
-                                    .reduce((total, block) => {
-                                        const words = block.value.split(/\s+/).length;
-                                        return total + words;
-                                    }, 0);
-                                const readTime = Math.max(1, Math.ceil(wordCount / 200));
-                                return `${readTime} ${language === 'en' ? 'min read' : 'min de lectura'}`;
-                            })()}
+                        <span className="font-terminal text-[var(--bb-border)]">|</span>
+                        <span className="font-terminal text-xs tracking-widest"
+                            style={{ color: 'var(--bb-cyan)' }}>
+                            {readTime} {content.ui.minRead}
                         </span>
                     </div>
                 </header>
 
-                {/* Content */}
-                <div className="prose prose-invert max-w-none">
+                {/* Content blocks */}
+                <div className="flex flex-col gap-6">
                     {article.content.map((block, index) => {
+                        const key = `${block.type}-${index}`;
                         switch (block.type) {
                             case 'text':
                                 return (
-                                    <p key={index} className="text-theme-overlay leading-relaxed mb-6 text-base md:text-lg">
+                                    <p key={key} className="font-mono text-sm md:text-base text-[var(--bb-text)] leading-relaxed">
                                         {parseTextContent(block.value)}
                                     </p>
                                 );
                             case 'heading':
                                 return (
-                                    <h2 key={index} className="text-2xl md:text-3xl font-bold text-theme-text mt-12 mb-6 flex items-center gap-3">
-                                        <span className="text-theme-mauve">#</span>
+                                    <h2 key={key} className="font-display font-bold tracking-widest mt-8 mb-2 flex items-center gap-3"
+                                        style={{
+                                            fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+                                            color: 'var(--bb-text)',
+                                        }}>
+                                        <span className="font-terminal" style={{ color: 'var(--bb-cyan)', filter: 'drop-shadow(0 0 4px rgba(0,240,255,0.5))' }}>##</span>
                                         <span>{block.value}</span>
                                     </h2>
                                 );
                             case 'code':
                                 return (
-                                    <div key={index} className="my-8">
-                                        <CodeViewer
-                                            code={block.value}
-                                            language={block.language || 'text'}
-                                        />
+                                    <div key={key} className="my-4">
+                                        <CodeViewer code={block.value} language={block.language || 'text'} />
                                     </div>
                                 );
                             case 'image':
                                 return (
-                                    <figure key={index} className="my-10">
-                                        <div className="glass-tile p-4">
-                                            <img
-                                                src={block.src}
-                                                alt={block.alt || ''}
-                                                className="w-full rounded-lg"
-                                            />
+                                    <figure key={key} className="my-6">
+                                        <div className="panel-tile p-3" style={{ clipPath: 'polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%)' }}>
+                                            <img src={block.src} alt={block.alt || ''} className="w-full" />
                                         </div>
                                         {block.alt && (
-                                            <figcaption className="text-sm text-theme-overlay mt-3 text-center italic">
-                                                {block.alt}
+                                            <figcaption className="font-terminal text-xs text-[var(--bb-dim)] mt-2 text-center tracking-widest">
+                                                // {block.alt}
                                             </figcaption>
                                         )}
                                     </figure>
                                 );
                             case 'sources':
                                 return (
-                                    <div key={index} className="mt-16 pt-8 border-t border-theme-overlay/20">
-                                        <h2 className="text-2xl md:text-3xl font-bold text-theme-text mb-6 flex items-center gap-3">
-                                            <span className="text-theme-blue">📚</span>
-                                            <span>{language === 'en' ? 'Sources & Further Reading' : 'Fuentes y Lectura Adicional'}</span>
+                                    <div key={key} className="mt-12 pt-6 border-t border-[var(--bb-border)]">
+                                        <p className="font-terminal text-[var(--bb-dim)] text-xs tracking-[0.3em] mb-2">
+                                            INTEL SOURCES // 情報源
+                                        </p>
+                                        <h2 className="terminal-heading text-base md:text-lg tracking-widest mb-5">
+                                            [ {language === 'en' ? 'SOURCES & FURTHER READING' : 'FUENTES Y LECTURA ADICIONAL'} ]
                                         </h2>
-                                        <ul className="space-y-3">
+
+                                        <ul className="flex flex-col gap-3">
                                             {block.links.map((link, linkIndex) => (
                                                 <li key={linkIndex}>
                                                     <a
                                                         href={link.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="glass-tile p-4 inline-flex items-center gap-3 group hover:border-theme-blue/50"
+                                                        className="inline-flex items-center gap-3 border border-[var(--bb-border)] px-4 py-2 font-mono text-sm text-[var(--bb-text)] hover:border-[var(--bb-amber)] hover:text-[var(--bb-amber)] transition-all group"
+                                                        style={{ background: 'var(--bb-panel)' }}
                                                     >
-                                                        <span className="text-theme-mauve group-hover:translate-x-1 transition-transform">→</span>
-                                                        <span className="text-theme-text group-hover:text-theme-blue transition-colors">{link.title}</span>
+                                                        <span className="text-[var(--bb-cyan)] group-hover:text-[var(--bb-amber)] transition-colors">&gt;&gt;</span>
+                                                        <span>{link.title}</span>
                                                     </a>
                                                 </li>
                                             ))}
@@ -199,15 +176,12 @@ const BlogArticle = () => {
                 </div>
             </article>
 
-            {/* Bottom back button */}
+            {/* Bottom back */}
             <Link
                 to="/blog"
-                className="inline-flex items-center gap-2 text-theme-overlay hover:text-theme-peach transition-colors text-sm mt-12 group"
+                className="inline-flex items-center gap-2 font-terminal text-sm text-[var(--bb-dim)] hover:text-[var(--bb-amber)] transition-colors mt-12 tracking-widest"
             >
-                <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                </svg>
-                <span>{language === 'en' ? "back to blog" : "volver al blog"}</span>
+                &lt; {content.ui.blogReturnToArchives}
             </Link>
         </div>
     );

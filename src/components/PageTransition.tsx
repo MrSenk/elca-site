@@ -11,12 +11,14 @@ const PageTransition = ({ children }: PageTransitionProps) => {
     const location = useLocation();
 
     useEffect(() => {
-        setIsVisible(false);
         const timeout = setTimeout(() => {
             setIsVisible(true);
         }, 50);
 
-        return () => clearTimeout(timeout);
+        return () => {
+            clearTimeout(timeout);
+            setIsVisible(false);
+        };
     }, [location.pathname]);
 
     return (
