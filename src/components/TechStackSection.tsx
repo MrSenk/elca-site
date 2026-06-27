@@ -2,8 +2,6 @@ import { useApp } from '../hooks/useApp';
 import BentoTile from './BentoTile';
 import { motion } from 'framer-motion';
 
-const PROFICIENCY = [92, 88, 85, 82, 80, 78, 75];
-
 const TechStackSection = () => {
     const { content } = useApp();
 
@@ -20,31 +18,32 @@ const TechStackSection = () => {
                 </h2>
             </div>
 
-            <div className="flex flex-col gap-3 p-5">
-                {content.tech.map((tech, idx) => {
-                    const pct = PROFICIENCY[idx] ?? Math.max(60, 92 - idx * 6);
-                    return (
-                        <div key={idx} className="flex flex-col gap-1 group">
-                            <div className="flex items-center justify-between">
-                                <span className="font-terminal text-sm text-[var(--bb-text)] tracking-wide group-hover:text-[var(--bb-amber)] transition-colors">
-                                    <span className="text-[var(--bb-dim)]">SYS:: </span>{tech}
-                                </span>
-                                <span className="font-terminal text-xs text-[var(--bb-amber)] ml-2 flex-shrink-0">
-                                    {pct}%
-                                </span>
-                            </div>
-                            <div className="diag-bar-track">
-                                <motion.div
-                                    className="diag-bar-fill"
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: `${pct}%` }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.8, delay: idx * 0.05, ease: 'easeOut' }}
-                                />
-                            </div>
-                        </div>
-                    );
-                })}
+            <div className="flex flex-col p-3">
+                {content.tech.map((tech, idx) => (
+                    <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.07, duration: 0.3, ease: 'easeOut' }}
+                        className="group flex items-start gap-3 px-2 py-2 border-l-2 border-transparent
+                                   hover:border-[var(--bb-amber)] transition-all duration-150 cursor-default"
+                        onMouseEnter={e => {
+                            (e.currentTarget as HTMLElement).style.background = 'rgba(255,176,0,0.04)';
+                        }}
+                        onMouseLeave={e => {
+                            (e.currentTarget as HTMLElement).style.background = 'transparent';
+                        }}
+                    >
+                        <span className="font-terminal text-[var(--bb-dim)] text-sm flex-shrink-0 mt-px
+                                         group-hover:text-[var(--bb-amber)] transition-colors">
+                            ◆
+                        </span>
+                        <span className="font-terminal text-sm text-[var(--bb-text)] tracking-wide leading-snug
+                                         group-hover:text-[var(--bb-amber)] transition-colors">
+                            {tech}
+                        </span>
+                    </motion.div>
+                ))}
             </div>
         </BentoTile>
     );

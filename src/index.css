@@ -110,34 +110,6 @@
     filter: drop-shadow(0 0 6px rgba(0, 240, 255, 0.5));
   }
 
-  /* Diagnostics bar (TechStack section) */
-  .diag-bar-track {
-    height: 6px;
-    background: var(--bb-border);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .diag-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--bb-amber), var(--bb-cyan));
-    position: relative;
-  }
-
-  /* Segmented tick marks on bar */
-  .diag-bar-fill::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      90deg,
-      transparent 0px,
-      transparent 8px,
-      var(--bb-void) 8px,
-      var(--bb-void) 9px
-    );
-  }
-
   /* Terminal [OK] badge */
   .terminal-badge {
     display: inline-flex;
@@ -297,53 +269,6 @@
   77%  { opacity: 1; clip-path: inset(2% 18% 73% 0%);  transform: translateX(12px); }
   78%  { opacity: 0; }
   100% { opacity: 0; }
-}
-
-/* ── Diagnostic bar glitch (hover) ── */
-@keyframes barGlitch {
-  0%   { filter: brightness(1); }
-  15%  { filter: brightness(2.5) saturate(3); box-shadow: 0 0 10px rgba(0,240,255,0.9); }
-  16%  { filter: brightness(0.4); box-shadow: 0 0 4px rgba(223,32,32,0.7); }
-  30%  { filter: brightness(1); box-shadow: none; }
-  55%  { filter: brightness(1); box-shadow: none; }
-  56%  { filter: brightness(2) saturate(0); box-shadow: 0 0 8px rgba(255,176,0,0.8); }
-  57%  { filter: brightness(0.6); box-shadow: none; }
-  70%  { filter: brightness(1); }
-  84%  { filter: brightness(1); }
-  85%  { filter: brightness(1.9) saturate(2); box-shadow: 0 0 6px rgba(0,240,255,0.6); }
-  86%  { filter: brightness(0.5); }
-  100% { filter: brightness(1); box-shadow: none; }
-}
-
-.group:hover .diag-bar-fill {
-  animation: barGlitch 0.4s linear infinite;
-}
-
-.diag-bar-track {
-  position: relative;
-}
-
-.diag-bar-track::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 3px;
-  height: 100%;
-  background: rgba(0, 240, 255, 0.95);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.group:hover .diag-bar-track::after {
-  animation: barScan 0.45s linear infinite;
-}
-
-@keyframes barScan {
-  0%   { left: -3px; opacity: 0; }
-  5%   { opacity: 1; }
-  92%  { opacity: 0.8; left: calc(100% + 3px); }
-  93%  { left: -3px; opacity: 0; }
-  100% { left: -3px; opacity: 0; }
 }
 
 /* ── Blink cursor ── */

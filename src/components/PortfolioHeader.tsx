@@ -55,8 +55,8 @@ const PortfolioHeader = () => {
     };
 
     return (
-        <header className="sticky top-0 z-50 panel-nav py-2 px-4 mb-6">
-            <div className="flex justify-between items-center">
+        <header className="fixed top-0 left-0 right-0 z-[200] panel-nav py-2">
+            <div className="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
                 {/* Logo / Name */}
                 <div className="flex items-center gap-3">
                     <span className="text-[var(--bb-amber)] font-terminal text-lg leading-none select-none">⌞</span>

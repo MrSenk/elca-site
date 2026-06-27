@@ -43,7 +43,7 @@ const BlogPage = () => {
                         : "Pensamientos, tips y aprendizajes sobre desarrollo Salesforce y otros temas que hubiera querido saber antes."}
                 </p>
                 <p className="font-terminal text-[var(--bb-dim)] text-xs tracking-widest mt-3">
-                    {articles.length} {content.ui.projectsRecordsFound} // RESULT_SET: {articles.length}
+                    {articles.length} RECORDS FOUND // RESULT_SET: {articles.length}
                 </p>
             </div>
 

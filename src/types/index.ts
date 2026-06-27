@@ -36,17 +36,12 @@ export interface UI {
     experienceTitle: string;
     certificationsTitle: string;
     techStackTitle: string;
-    projectsTitle: string;
     heroBlogCta: string;
     heroRetrieving: string;
     heroIdentityConfirmed: string;
     heroStatusActive: string;
     aboutReading: string;
     aboutWordsDecoded: string;
-    projectsRecordsFound: string;
-    statusActive: string;
-    statusClassified: string;
-    statusArchived: string;
     footerAllSystems: string;
     blogOpenFile: string;
     blogReturnToBase: string;
@@ -59,7 +54,6 @@ export interface UI {
     certificationsSubLabel: string;
     beyondCodeSubLabel: string;
     beyondCodeActivities: string;
-    projectsSubLabel: string;
 }
 
 export interface CertificationSection {
@@ -69,17 +63,6 @@ export interface CertificationSection {
 
 export interface Certifications {
     sections: CertificationSection[];
-}
-
-export interface Project {
-    id: string;
-    title: string;
-    subtitle: string;
-    description: string;
-    tags: string[];
-    imageUrl?: string;
-    link?: string;
-    status: 'ACTIVE' | 'ARCHIVED' | 'CLASSIFIED';
 }
 
 export interface Content {
@@ -92,7 +75,6 @@ export interface Content {
     tech: string[];
     certifications: Certifications;
     experience: Experience[];
-    projects: Project[];
 }
 
 export interface ContentData {

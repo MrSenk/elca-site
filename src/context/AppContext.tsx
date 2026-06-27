@@ -1,4 +1,4 @@
-import { createContext, useState, type ReactNode } from 'react';
+import { createContext, useState, useEffect, type ReactNode } from 'react';
 import contentData from '../data/content.json';
 import type { Content, ContentData } from '../types';
 
@@ -29,6 +29,10 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     const fullContent = contentData as ContentData;
     const content = fullContent[language];
+
+    useEffect(() => {
+        document.title = `${content.profile.name} | ${content.profile.role}`;
+    }, [content.profile.name, content.profile.role]);
 
     return (
         <AppContext.Provider value={{ language, setLanguage, content }}>

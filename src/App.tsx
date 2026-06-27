@@ -10,7 +10,6 @@ import TechStackSection from './components/TechStackSection';
 import FooterSection from './components/FooterSection';
 import AboutSection from './components/AboutSection';
 import BeyondCodeSection from './components/BeyondCodeSection';
-import ProjectsSection from './components/ProjectsSection';
 import BlogPage from './pages/BlogPage';
 import BlogArticle from './pages/BlogArticle';
 import PageTransition from './components/PageTransition';
@@ -26,7 +25,6 @@ function Portfolio() {
         <CertificationsSection />
         <TechStackSection />
         <BeyondCodeSection />
-        <ProjectsSection />
       </BentoGrid>
     </main>
   );

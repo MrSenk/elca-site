@@ -26,17 +26,12 @@
             "experienceTitle": "Experience",
             "certificationsTitle": "Certifications",
             "techStackTitle": "Tech stack",
-            "projectsTitle": "Projects",
             "heroBlogCta": "TRANSMISSIONS",
             "heroRetrieving": "RETRIEVING RECORD",
             "heroIdentityConfirmed": "IDENTITY CONFIRMED",
             "heroStatusActive": "ACTIVE // OPERATIVE",
             "aboutReading": "READING FILE... DECRYPTING...",
             "aboutWordsDecoded": "WORDS DECODED",
-            "projectsRecordsFound": "RECORDS FOUND",
-            "statusActive": "● ACTIVE",
-            "statusClassified": "■ CLASSIFIED",
-            "statusArchived": "○ ARCHIVED",
             "footerAllSystems": "ALL SYSTEMS OPERATIONAL.",
             "blogOpenFile": "OPEN FILE",
             "blogReturnToBase": "RETURN TO BASE",
@@ -48,8 +43,7 @@
             "experienceSubLabel": "HISTORY",
             "certificationsSubLabel": "LICENSES",
             "beyondCodeSubLabel": "DATA",
-            "beyondCodeActivities": "PERSONAL ACTIVITIES",
-            "projectsSubLabel": "TARGETS IDENTIFIED"
+            "beyondCodeActivities": "PERSONAL ACTIVITIES"
         },
         "tech": [
             "Apex (Triggers, Batch, Queueable, Schedulable)",
@@ -134,32 +128,6 @@
                 "period": "Dec 2018 - Jan 2019",
                 "description": "Developed mobile application using Flutter to support research activities during academic internship in Germany."
             }
-        ],
-        "projects": [
-            {
-                "id": "proj-001",
-                "title": "COMEX INTEGRATION HUB",
-                "subtitle": "Apex · LWC · REST APIs · Platform Events",
-                "description": "Foreign trade operations platform at BancoEstado. Custom LWCs, event-driven integrations, and Apex automation layers handling complex COMEX transaction workflows.",
-                "tags": ["Apex", "LWC", "Platform Events", "REST APIs"],
-                "status": "ACTIVE"
-            },
-            {
-                "id": "proj-002",
-                "title": "ENTERPRISE LWC LIBRARY",
-                "subtitle": "Lightning Web Components · Jest · Design System",
-                "description": "Reusable LWC component library for TCS enterprise clients. 30+ components with documented APIs, Jest test coverage, and a consistent design language across orgs.",
-                "tags": ["LWC", "Jest", "TypeScript", "Storybook"],
-                "status": "ACTIVE"
-            },
-            {
-                "id": "proj-003",
-                "title": "PENSION FUND PORTAL",
-                "subtitle": "Apex · LWC · Vue.js · API Integrations",
-                "description": "Full-stack Salesforce solution for AFP Cuprum pension fund management. Apex data layer, LWC frontend, external API integrations, and automated SOQL-optimized batch jobs.",
-                "tags": ["Apex", "LWC", "Vue.js", "SOQL"],
-                "status": "ARCHIVED"
-            }
         ]
     },
     "es": {
@@ -189,17 +157,12 @@
             "experienceTitle": "Experiencia",
             "certificationsTitle": "Certificaciones",
             "techStackTitle": "Stack tecnológico",
-            "projectsTitle": "Proyectos",
             "heroBlogCta": "TRANSMISIONES",
             "heroRetrieving": "RECUPERANDO REGISTRO",
             "heroIdentityConfirmed": "IDENTIDAD CONFIRMADA",
             "heroStatusActive": "ACTIVO // OPERATIVO",
             "aboutReading": "LEYENDO ARCHIVO... DESCIFRANDO...",
             "aboutWordsDecoded": "PALABRAS DECODIFICADAS",
-            "projectsRecordsFound": "REGISTROS ENCONTRADOS",
-            "statusActive": "● ACTIVO",
-            "statusClassified": "■ CLASIFICADO",
-            "statusArchived": "○ ARCHIVADO",
             "footerAllSystems": "TODOS LOS SISTEMAS OPERACIONALES.",
             "blogOpenFile": "ABRIR ARCHIVO",
             "blogReturnToBase": "VOLVER A BASE",
@@ -211,8 +174,7 @@
             "experienceSubLabel": "HISTORIAL",
             "certificationsSubLabel": "LICENCIAS",
             "beyondCodeSubLabel": "DATOS",
-            "beyondCodeActivities": "ACTIVIDADES PERSONALES",
-            "projectsSubLabel": "OBJETIVOS IDENTIFICADOS"
+            "beyondCodeActivities": "ACTIVIDADES PERSONALES"
         },
         "tech": [
             "Apex (Triggers, Batch, Queueable, Schedulable)",
@@ -296,32 +258,6 @@
                 "role": "Estudiante en prácticas",
                 "period": "Dic 2018 - Ene 2019",
                 "description": "Desarrollé aplicación móvil usando Flutter para apoyar actividades de investigación durante pasantía académica en Alemania."
-            }
-        ],
-        "projects": [
-            {
-                "id": "proj-001",
-                "title": "HUB DE INTEGRACIÓN COMEX",
-                "subtitle": "Apex · LWC · REST APIs · Platform Events",
-                "description": "Plataforma de operaciones de comercio exterior en BancoEstado. LWCs personalizados, integraciones basadas en eventos y capas de automatización Apex para flujos de transacciones COMEX.",
-                "tags": ["Apex", "LWC", "Platform Events", "REST APIs"],
-                "status": "ACTIVE"
-            },
-            {
-                "id": "proj-002",
-                "title": "BIBLIOTECA LWC ENTERPRISE",
-                "subtitle": "Lightning Web Components · Jest · Design System",
-                "description": "Librería de componentes LWC reutilizables para clientes enterprise de TCS. Más de 30 componentes con APIs documentadas, cobertura Jest y lenguaje de diseño consistente.",
-                "tags": ["LWC", "Jest", "TypeScript", "Storybook"],
-                "status": "ACTIVE"
-            },
-            {
-                "id": "proj-003",
-                "title": "PORTAL FONDO DE PENSIONES",
-                "subtitle": "Apex · LWC · Vue.js · Integraciones API",
-                "description": "Solución Salesforce full-stack para gestión de fondos AFP Cuprum. Capa de datos Apex, frontend LWC, integraciones API externas y batch jobs optimizados con SOQL.",
-                "tags": ["Apex", "LWC", "Vue.js", "SOQL"],
-                "status": "ARCHIVED"
             }
         ]
     }
