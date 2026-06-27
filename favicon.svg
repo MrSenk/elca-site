@@ -1,5 +1,50 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#1e1e2e" />
-  <path d="M50 8C26.8 8 8 26.8 8 50s18.8 42 42 42 42-18.8 42-42S73.2 8 50 8zm0 78C30.1 86 14 69.9 14 50S30.1 14 50 14s36 16.1 36 36-16.1 36-36 36z" fill="#fab387" opacity="0.1"/>
-  <text x="50" y="68" font-family="system-ui, -apple-system, sans-serif" font-weight="800" font-size="55" text-anchor="middle" fill="#89b4fa">CC</text>
+  <defs>
+    <!-- CRT scanline pattern -->
+    <pattern id="scan" x="0" y="0" width="100" height="4" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="3" x2="100" y2="3" stroke="#ffffff" stroke-width="0.8" opacity="0.05"/>
+    </pattern>
+    <!-- Phosphor glow on text -->
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Subtle amber inner vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#ffb000" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#ffb000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Void black background -->
+  <rect width="100" height="100" fill="#08080a"/>
+
+  <!-- CRT scanlines -->
+  <rect width="100" height="100" fill="url(#scan)"/>
+
+  <!-- Phosphor inner vignette -->
+  <rect width="100" height="100" fill="url(#vignette)"/>
+
+  <!-- Panel border — 3 clean sides + top-right notch cut -->
+  <polyline points="75,3 3,3 3,97 97,97 97,25"
+            fill="none" stroke="#ffb000" stroke-width="3.5" stroke-linejoin="miter" opacity="0.9"/>
+  <!-- Notch diagonal -->
+  <line x1="75" y1="3" x2="97" y2="25"
+        stroke="#ffb000" stroke-width="3.5" opacity="0.9"/>
+
+  <!-- Corner accent — tiny inner tick marks at the notch -->
+  <line x1="68" y1="3" x2="75" y2="3"   stroke="#ffb000" stroke-width="1.2" opacity="0.45"/>
+  <line x1="97" y1="25" x2="97" y2="33" stroke="#ffb000" stroke-width="1.2" opacity="0.45"/>
+
+  <!-- CC initials — amber phosphor glow -->
+  <text x="50" y="67"
+        font-family="'Courier New', Courier, monospace"
+        font-weight="700"
+        font-size="46"
+        text-anchor="middle"
+        fill="#ffb000"
+        filter="url(#glow)">CC</text>
 </svg>
